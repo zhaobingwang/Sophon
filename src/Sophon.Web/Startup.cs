@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sophon.Infrastructure.Data;
 
 namespace Sophon.Web
 {
@@ -23,6 +25,10 @@ namespace Sophon.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<SophonDbContext>(option =>
+            {
+                option.UseSqlite(Configuration.GetConnectionString("SQLite"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
