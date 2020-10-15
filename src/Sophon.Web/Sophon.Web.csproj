@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Sophon.Infrastructure\Sophon.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sophon.Infrastructure\Sophon.Infrastructure.csproj" />
     <ProjectReference Include="..\Sophon.Toolkit\Sophon.Toolkit.csproj" />
   </ItemGroup>
 

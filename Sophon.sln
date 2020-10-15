@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Web", "src\Sophon.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit", "src\Sophon.Toolkit\Sophon.Toolkit.csproj", "{0683DEB7-6025-4D7B-B6AE-453B1C6091C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Infrastructure", "Sophon.Infrastructure\Sophon.Infrastructure.csproj", "{D8C5AAB5-6AA5-46C0-96D8-EFD7D35CF42A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Infrastructure", "src\Sophon.Infrastructure\Sophon.Infrastructure.csproj", "{4F39C97C-8C3F-48E3-AB20-A6A57527A394}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{0683DEB7-6025-4D7B-B6AE-453B1C6091C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0683DEB7-6025-4D7B-B6AE-453B1C6091C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0683DEB7-6025-4D7B-B6AE-453B1C6091C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8C5AAB5-6AA5-46C0-96D8-EFD7D35CF42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8C5AAB5-6AA5-46C0-96D8-EFD7D35CF42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8C5AAB5-6AA5-46C0-96D8-EFD7D35CF42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8C5AAB5-6AA5-46C0-96D8-EFD7D35CF42A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F39C97C-8C3F-48E3-AB20-A6A57527A394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F39C97C-8C3F-48E3-AB20-A6A57527A394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F39C97C-8C3F-48E3-AB20-A6A57527A394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F39C97C-8C3F-48E3-AB20-A6A57527A394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
