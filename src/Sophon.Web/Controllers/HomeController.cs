@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,12 +21,8 @@ namespace Sophon.Web.Controllers
             this.assetServices = assetServices;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var source = await assetServices.TotalStatistics();
-            var aa = string.Join(',', source.Select(x => x.Name));
-            ViewData["XAxis"] = string.Join(',', source.Select(x => x.Name));
-            ViewData["YAxis"] = string.Join(',', source.Select(x => x.AggregateAmount));
             return View();
         }
 

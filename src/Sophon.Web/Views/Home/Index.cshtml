@@ -9,34 +9,55 @@
 @section Scripts{
     <script src="~/lib/echarts/dist/echarts.min.js"></script>
     <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+        $(function () {
+            init();
+        });
+        function init() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
 
-        var xAxis = '@ViewData["XAxis"]';
-        var xAxisData = xAxis.split(',');
-        var yAxis = '@ViewData["YAxis"]';
-        var yAxisData=yAxis.split(',');
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: '资产概览'
-            },
-            tooltip: {},
-            legend: {
-                data: ['金额（元）']
-            },
-            xAxis: {
-                data: xAxis
-            },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'bar',
-                data: yAxisData
-            }]
-        };
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                title: {
+                    text: '资产概览'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['总资产（元）']
+                },
+                xAxis: {
+                    data: []
+                },
+                yAxis: {},
+                series: [{
+                    name: '总资产（元）',
+                    type: 'bar',
+                    data: []
+                }]
+            });
+            myChart.showLoading();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "api/statistics/total",
+                dataType: "json",
+                success: function (result) {
+                    myChart.hideLoading();
+                    myChart.setOption({
+                        xAxis: {
+                            data: result.x
+                        },
+                        series: [{
+                            name: '总资产（元）',
+                            data: result.y
+                        }]
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+                }
+            });
+        }
     </script>
 }
