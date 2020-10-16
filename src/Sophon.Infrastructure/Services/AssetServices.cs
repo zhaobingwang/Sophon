@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sophon.Infrastructure.Data;
 using Sophon.Infrastructure.Entities;
+using Sophon.Infrastructure.Interface;
 using Sophon.Infrastructure.VO;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sophon.Infrastructure.Services
 {
-    public class AssetServices
+    public class AssetServices : ISophonAutoDependence
     {
         private readonly SophonDbContext dbContext;
 
