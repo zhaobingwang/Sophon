@@ -8,7 +8,7 @@ namespace Sophon.Infrastructure.Data
 {
     public class SophonDbContext : DbContext
     {
-        public DbSet<Tmp> Tmp { get; set; }
+        public DbSet<Asset> Assets { get; set; }
 
         public SophonDbContext(DbContextOptions<SophonDbContext> options) : base(options)
         {
@@ -17,7 +17,14 @@ namespace Sophon.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Tmp>().ToTable("tmp");
+            modelBuilder.Entity<Asset>(entity =>
+            {
+                entity.ToTable("assets");
+                entity.HasKey(x => x.Id);
+                entity.HasIndex(x => x.Name).IsUnique();
+
+                entity.Property(x => x.Name).IsRequired();
+            });
         }
     }
 }

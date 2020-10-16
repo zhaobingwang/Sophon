@@ -2,7 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="width: 600px;height:400px;"></div>
+
+
+@section Scripts{
+    <script src="~/lib/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var xAxis = '@ViewData["XAxis"]';
+        var xAxisData = xAxis.split(',');
+        var yAxis = '@ViewData["YAxis"]';
+        var yAxisData=yAxis.split(',');
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '资产概览'
+            },
+            tooltip: {},
+            legend: {
+                data: ['金额（元）']
+            },
+            xAxis: {
+                data: xAxis
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+}

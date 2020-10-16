@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sophon.Infrastructure.Services;
 using Sophon.Web.Models;
 
 namespace Sophon.Web.Controllers
@@ -12,14 +13,19 @@ namespace Sophon.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AssetServices assetServices;
+        public HomeController(ILogger<HomeController> logger, AssetServices assetServices)
         {
             _logger = logger;
+            this.assetServices = assetServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var source = await assetServices.TotalStatistics();
+            var aa = string.Join(',', source.Select(x => x.Name));
+            ViewData["XAxis"] = string.Join(',', source.Select(x => x.Name));
+            ViewData["YAxis"] = string.Join(',', source.Select(x => x.AggregateAmount));
             return View();
         }
 

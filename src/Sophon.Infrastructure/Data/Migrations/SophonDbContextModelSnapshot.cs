@@ -16,33 +16,34 @@ namespace Sophon.Infrastructure.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
 
-            modelBuilder.Entity("Sophon.Infrastructure.Entities.Tmp", b =>
+            modelBuilder.Entity("Sophon.Infrastructure.Entities.Assets", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("DOB")
+                    b.Property<decimal>("AggregateAmount")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("IsDelete")
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsLock")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("ModifyTime")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("RegTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<short?>("Status")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("tmp");
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("assets");
                 });
 #pragma warning restore 612, 618
         }

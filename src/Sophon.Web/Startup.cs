@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sophon.Infrastructure.Data;
+using Sophon.Infrastructure.Services;
 
 namespace Sophon.Web
 {
@@ -29,6 +30,8 @@ namespace Sophon.Web
             {
                 option.UseSqlite(Configuration.GetConnectionString("SQLite"));
             });
+
+            services.AddScoped<AssetServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
