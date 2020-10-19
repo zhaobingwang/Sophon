@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sophon.Infrastructure.Data;
 
 namespace Sophon.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SophonDbContext))]
-    partial class SophonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201019071530_AddTableAssetRecords")]
+    partial class AddTableAssetRecords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

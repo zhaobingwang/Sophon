@@ -2,8 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-<div id="main" style="width: 600px;height:400px;"></div>
+<div class="row">
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div class="col-6" id="main" style="width:400px;height:300px;"></div>
+
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div class="col-6" id="ar" style="width:400px;height:300px;"></div>
+</div>
+
 
 
 @section Scripts{
@@ -11,6 +17,7 @@
     <script type="text/javascript">
         $(function () {
             init();
+            initAssetRecords();
         });
         function init() {
             // 基于准备好的dom，初始化echarts实例
@@ -51,6 +58,59 @@
                             name: '总资产（元）',
                             data: result.y
                         }]
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
+
+                }
+            });
+        }
+
+        function initAssetRecords() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('ar'));
+
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                title: {
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: []
+            });
+            myChart.showLoading();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "api/statistics/ar",
+                dataType: "json",
+                success: function (result) {
+                    myChart.hideLoading();
+                    myChart.setOption({
+                        title: result.title,
+                        legend: result.legend,
+                        xAxis: result.xAxis,
+                        series: result.series,
                     });
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
