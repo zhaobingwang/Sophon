@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Sophon.Toolkit\Sophon.Toolkit.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\plugins\layer-v3.1.1\mobile\layer.js" />
+  </ItemGroup>
+
 </Project>

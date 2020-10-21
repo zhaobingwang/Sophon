@@ -46,6 +46,7 @@ namespace Sophon.Web.Controllers
                 {
                     series.Add(new Series
                     {
+                        Smooth = true,
                         Name = item.Name,
                         Type = "line",
                         Stack = "平均金额",
@@ -93,6 +94,7 @@ namespace Sophon.Web.Controllers
 
     public class Series
     {
+        public bool Smooth { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Stack { get; set; }

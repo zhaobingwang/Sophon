@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="row">
+    <h1>Asset Records</h1>
+    <div class="col-6">
+        <input id="add" type="button" class="btn btn-primary" value="新增" />
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            bindEvent();
+        });
+
+        function bindEvent() {
+            $('#add').click(function () {
+                layer.open({
+                    title: '新增资产记录',
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false, // 不固定
+                    maxmin: true,
+                    content: 'assetrecord/add'
+                });
+            });
+        }
+    </script>
+}

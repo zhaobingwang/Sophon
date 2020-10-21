@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_LayoutDialog";
+}
+<form>
+    <fieldset>
+        <div class="form-group">
+            <label for="category">资产分类</label>
+            <select class="form-control" id="category">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="amount">总金额</label>
+            <input id="amount" type="text" placeholder="总金额" class="form-control" />
+        </div>
+        <button id="save" type="button" class="btn btn-primary">保存</button>
+    </fieldset>
+</form>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            loadCategory();
+            bindEvent();
+        });
+
+        function loadCategory() {
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "/api/asset/category",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == '0' && result.data != null) {
+                        for (var i = 0; i < result.data.length; i++) {
+                            $('#category').append('<option value="' + result.data[i].id + '">' + result.data[i].name + '</option>');
+                        }
+                    } else {
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
+                }
+            });
+        }
+
+        function bindEvent() {
+            $('#save').click(function () {
+                var params = {
+                    amount: $('#amount').val(),
+                    aId: $('#category').val(),
+                    aName: $('#category option:selected').text().trim()
+                }
+                $.ajax({
+                    type: "post",
+                    data: params,
+                    async: true,
+                    url: "/api/ar/add",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.code == '0') {
+                            layer.msg('保存成功');
+                            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                            parent.layer.close(index);
+                        } else {
+                            layer.msg('保存失败');
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.responseText);
+                    }
+                });
+            });
+        }
+    </script>
+}
