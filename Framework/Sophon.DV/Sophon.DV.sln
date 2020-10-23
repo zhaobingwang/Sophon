@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.DV.Echarts", "Sophon.DV.Echarts\Sophon.DV.Echarts.csproj", "{2423ED9F-57CC-45CC-A823-526CA32456A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.DV.Echarts.Demo", "Sophon.DV.Echarts.Demo\Sophon.DV.Echarts.Demo.csproj", "{39283738-EE3A-4F28-98BE-480F2312140C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2423ED9F-57CC-45CC-A823-526CA32456A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2423ED9F-57CC-45CC-A823-526CA32456A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2423ED9F-57CC-45CC-A823-526CA32456A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2423ED9F-57CC-45CC-A823-526CA32456A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39283738-EE3A-4F28-98BE-480F2312140C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39283738-EE3A-4F28-98BE-480F2312140C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39283738-EE3A-4F28-98BE-480F2312140C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39283738-EE3A-4F28-98BE-480F2312140C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C75CBA3A-0402-48ED-82F4-4174927528B4}
+	EndGlobalSection
+EndGlobal
