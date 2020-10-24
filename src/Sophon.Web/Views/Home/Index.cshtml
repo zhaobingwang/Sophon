@@ -25,22 +25,39 @@
 
             // 指定图表的配置项和数据
             myChart.setOption({
-                title: {
-                    text: '资产概览'
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
                 },
-                tooltip: {},
                 legend: {
-                    data: ['总资产（元）']
-                },
-                xAxis: {
+                    orient: 'vertical',
+                    left: 10,
                     data: []
                 },
-                yAxis: {},
-                series: [{
-                    name: '总资产（元）',
-                    type: 'bar',
-                    data: []
-                }]
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                        ]
+                    }
+                ]
             });
             myChart.showLoading();
             $.ajax({
@@ -51,13 +68,34 @@
                 success: function (result) {
                     myChart.hideLoading();
                     myChart.setOption({
-                        xAxis: {
-                            data: result.x
+                        legend: {
+                            orient: 'vertical',
+                            left: 10,
+                            data: result.legend
                         },
-                        series: [{
-                            name: '总资产（元）',
-                            data: result.y
-                        }]
+                        series: [
+                            {
+                                name: '访问来源',
+                                type: 'pie',
+                                radius: ['50%', '70%'],
+                                avoidLabelOverlap: false,
+                                label: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                data: result.series
+                            }
+                        ]
                     });
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {

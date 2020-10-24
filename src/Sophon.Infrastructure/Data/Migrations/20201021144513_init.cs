@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sophon.Infrastructure.Data.Migrations
 {
-    public partial class AddTableAssetRecords : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace Sophon.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AssetId = table.Column<int>(nullable: false),
-                    AssetName = table.Column<string>(nullable: false),
+                    TypeCode = table.Column<string>(nullable: false),
+                    TypeName = table.Column<string>(nullable: true),
                     AggregateAmount = table.Column<decimal>(nullable: false),
                     CreateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<int>(nullable: false)
@@ -23,12 +23,34 @@ namespace Sophon.Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_asset_records", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "asset_type",
+                columns: table => new
+                {
+                    Code = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Method = table.Column<short>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_asset_type", x => x.Code);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_asset_type_Name",
+                table: "asset_type",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "asset_records");
+
+            migrationBuilder.DropTable(
+                name: "asset_type");
         }
     }
 }

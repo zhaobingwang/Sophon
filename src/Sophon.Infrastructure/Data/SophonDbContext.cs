@@ -8,7 +8,7 @@ namespace Sophon.Infrastructure.Data
 {
     public class SophonDbContext : DbContext
     {
-        public DbSet<Asset> Assets { get; set; }
+        public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<AssetRecord> AssetRecords { get; set; }
 
         public SophonDbContext(DbContextOptions<SophonDbContext> options) : base(options)
@@ -18,10 +18,10 @@ namespace Sophon.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Asset>(entity =>
+            modelBuilder.Entity<AssetType>(entity =>
             {
-                entity.ToTable("assets");
-                entity.HasKey(x => x.Id);
+                entity.ToTable("asset_type");
+                entity.HasKey(x => x.Code);
                 entity.HasIndex(x => x.Name).IsUnique();
 
                 entity.Property(x => x.Name).IsRequired();
@@ -33,8 +33,8 @@ namespace Sophon.Infrastructure.Data
                 entity.HasKey(x => x.Id);
 
                 entity.Property(x => x.AggregateAmount).IsRequired();
-                entity.Property(x => x.AssetId).IsRequired();
-                entity.Property(x => x.AssetName).IsRequired();
+                entity.Property(x => x.TypeCode).IsRequired();
+                entity.Property(x => x.TypeCode).IsRequired();
             });
         }
     }

@@ -26,13 +26,13 @@ namespace Sophon.Web.Controllers.Api
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromForm] decimal amount, [FromForm] int aId, [FromForm] string aName)
+        public async Task<IActionResult> Add([FromForm] decimal amount, [FromForm] string typeCode, [FromForm] string typeName)
         {
             _dbContext.AssetRecords.Add(new AssetRecord
             {
                 AggregateAmount = amount,
-                AssetId = aId,
-                AssetName = aName,
+                TypeCode = typeCode,
+                TypeName = typeName,
                 CreateTime = DateTime.UtcNow,
                 IsDeleted = IsDeleted.No
             });

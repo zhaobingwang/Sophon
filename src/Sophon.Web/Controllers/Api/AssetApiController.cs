@@ -28,7 +28,7 @@ namespace Sophon.Web.Controllers.Api
         [HttpGet("category")]
         public async Task<IActionResult> Category()
         {
-            var category = await _dbContext.Assets.Where(x => x.IsDeleted == IsDeleted.No).Select(x => new { x.Id, x.Name }).ToListAsync();
+            var category = await _dbContext.AssetTypes.Select(x => new { x.Code, x.Name }).ToListAsync();
             return Ok(new { code = "0", data = category });
         }
     }

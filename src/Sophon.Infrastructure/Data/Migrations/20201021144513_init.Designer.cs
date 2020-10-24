@@ -9,44 +9,14 @@ using Sophon.Infrastructure.Data;
 namespace Sophon.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SophonDbContext))]
-    [Migration("20201019071530_AddTableAssetRecords")]
-    partial class AddTableAssetRecords
+    [Migration("20201021144513_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
-
-            modelBuilder.Entity("Sophon.Infrastructure.Entities.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("AggregateAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ModifyTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("assets");
-                });
 
             modelBuilder.Entity("Sophon.Infrastructure.Entities.AssetRecord", b =>
                 {
@@ -57,22 +27,42 @@ namespace Sophon.Infrastructure.Data.Migrations
                     b.Property<decimal>("AggregateAmount")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("AssetId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("AssetName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("IsDeleted")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("TypeCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("asset_records");
+                });
+
+            modelBuilder.Entity("Sophon.Infrastructure.Entities.AssetType", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<short>("Method")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Code");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("asset_type");
                 });
 #pragma warning restore 612, 618
         }

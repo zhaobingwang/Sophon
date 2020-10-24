@@ -14,11 +14,9 @@ namespace Sophon.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AssetServices assetServices;
-        public HomeController(ILogger<HomeController> logger, AssetServices assetServices)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            this.assetServices = assetServices;
         }
 
         public IActionResult Index()

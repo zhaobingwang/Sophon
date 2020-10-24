@@ -2,7 +2,6 @@
 using Sophon.Infrastructure.Data;
 using Sophon.Infrastructure.Entities;
 using Sophon.Infrastructure.Interface;
-using Sophon.Infrastructure.VO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,20 +11,17 @@ namespace Sophon.Infrastructure.Services
 {
     public class AssetServices : ISophonAutoDependence
     {
-        private readonly SophonDbContext dbContext;
+        private readonly SophonDbContext _dbContext;
 
         public AssetServices(SophonDbContext dbContext)
         {
-            this.dbContext = dbContext;
-        }
-        public async Task<List<Asset>> TotalStatistics()
-        {
-            return await dbContext.Assets.ToListAsync();
+            _dbContext = dbContext;
         }
 
-        public async Task<AssetWeeklyStatistics> WeeklyStatistics()
+        public async Task<List<AssetRecord>> ListAllAsync()
         {
-            throw new NotImplementedException();
+            var list = await _dbContext.AssetRecords.ToListAsync();
+            return list;
         }
     }
 }

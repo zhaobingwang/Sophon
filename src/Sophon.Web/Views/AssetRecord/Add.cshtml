@@ -33,7 +33,7 @@
                 success: function (result) {
                     if (result.code == '0' && result.data != null) {
                         for (var i = 0; i < result.data.length; i++) {
-                            $('#category').append('<option value="' + result.data[i].id + '">' + result.data[i].name + '</option>');
+                            $('#category').append('<option value="' + result.data[i].code + '">' + result.data[i].name + '</option>');
                         }
                     } else {
                     }
@@ -48,8 +48,8 @@
             $('#save').click(function () {
                 var params = {
                     amount: $('#amount').val(),
-                    aId: $('#category').val(),
-                    aName: $('#category option:selected').text().trim()
+                    typeCode: $('#category').val(),
+                    typeName: $('#category option:selected').text().trim()
                 }
                 $.ajax({
                     type: "post",

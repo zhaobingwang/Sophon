@@ -5,7 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sophon.Infrastructure;
+using Sophon.Infrastructure.Data;
 using Sophon.Infrastructure.Services;
 
 namespace Sophon.Web.Controllers
@@ -15,42 +18,52 @@ namespace Sophon.Web.Controllers
     public class StatisticsController : ControllerBase
     {
         private readonly ILogger<StatisticsController> _logger;
-        private readonly AssetServices _assetServices;
-        private readonly AssetRecordServices _assetRecordServices;
+        private readonly SophonDbContext _dbContext;
 
-        public StatisticsController(ILogger<StatisticsController> logger, AssetServices assetServices, AssetRecordServices assetRecordServices)
+        public StatisticsController(ILogger<StatisticsController> logger, SophonDbContext dbContext)
         {
             _logger = logger;
-            _assetServices = assetServices;
-            _assetRecordServices = assetRecordServices;
+            _dbContext = dbContext;
         }
 
         [HttpGet("total")]
         public async Task<IActionResult> Total()
         {
-            var source = await _assetServices.TotalStatistics();
-            return Ok(new { x = source.Select(x => x.Name), y = source.Select(x => x.AggregateAmount) });
+            List<string> types = new List<string>();
+            List<KV> latestAmount = new List<KV>();
+            var assetTypes = await _dbContext.AssetTypes.ToListAsync();
+            foreach (var assetType in assetTypes)
+            {
+                var currentAsset = await _dbContext.AssetRecords
+                    .Where(x => x.IsDeleted == IsDeleted.No)
+                    .OrderByDescending(x => x.CreateTime)
+                    .FirstOrDefaultAsync(x => x.TypeCode == assetType.Code);
+
+                types.Add(assetType.Name);
+                latestAmount.Add(new KV { Name = assetType.Name, Value = currentAsset?.AggregateAmount ?? 0M });
+            }
+            return Ok(new { legend = types, series = latestAmount });
         }
 
         // TODO: 优化
         [HttpGet("ar")]
         public async Task<IActionResult> AssetRecords()
         {
-            var source = await _assetServices.TotalStatistics();
-            var ar = await _assetRecordServices.ListAllAsync();
+            var assetTypes = await _dbContext.AssetTypes.ToListAsync();
+            var ar = await _dbContext.AssetRecords.ToListAsync();
             List<Series> series = new List<Series>();
             IEnumerable<string> x = new List<string>();
-            foreach (var item in source)
+            foreach (var item in assetTypes)
             {
-                if (ar.Exists(x => x.AssetName == item.Name))
+                if (ar.Exists(x => x.TypeName == item.Name))
                 {
                     series.Add(new Series
                     {
                         Smooth = true,
                         Name = item.Name,
                         Type = "line",
-                        Stack = "平均金额",
-                        Data = ar.Where(x => x.AssetName == item.Name).GroupBy(x => x.CreateTime.ToString("yyyy-MM-dd")).Select(x => x.Average(y => y.AggregateAmount))
+                        //Stack = "平均金额",
+                        Data = ar.Where(x => x.TypeName == item.Name).GroupBy(x => x.CreateTime.ToString("yyyy-MM-dd")).Select(x => x.Average(y => y.AggregateAmount))
                     });
                     if (x.Count() < 1)
                     {
@@ -60,10 +73,10 @@ namespace Sophon.Web.Controllers
 
             }
 
-            return Ok(new ChartOption
+            var result = new ChartOption
             {
                 Title = new Title { Text = "测试" },
-                Legend = new Legend { Data = source.Select(x => x.Name) },
+                Legend = new Legend { Data = assetTypes.Select(x => x.Name) },
                 Series = series,
                 XAxis = new XAxis
                 {
@@ -71,8 +84,15 @@ namespace Sophon.Web.Controllers
                     BoundaryGap = "false",
                     Data = x,
                 }
-            });
+            };
+            return Ok(result);
         }
+    }
+
+    public class KV
+    {
+        public string Name { get; set; }
+        public decimal Value { get; set; }
     }
 
     public class ChartOption
