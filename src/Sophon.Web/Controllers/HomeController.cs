@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Sophon.Infrastructure.Services;
 using Sophon.Web.Models;
 
@@ -21,7 +22,12 @@ namespace Sophon.Web.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("访问了Home/Index。。。");
             return View();
+        }
+        public IActionResult TriggerError()
+        {
+            throw new Exception("触发异常了。。。");
         }
 
         public IActionResult Privacy()

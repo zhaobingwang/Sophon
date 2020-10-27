@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Sophon.Infrastructure.Data;
 using Sophon.Infrastructure.Services;
 using Sophon.Web.Extensions;
+using Sophon.Web.Filter;
 
 namespace Sophon.Web
 {
@@ -26,7 +27,9 @@ namespace Sophon.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+                options.Filters.Add<CustomExceptionFilter>()
+            );
             services.AddDbContext<SophonDbContext>(option =>
             {
                 option.UseSqlite(Configuration.GetConnectionString("SQLite"));

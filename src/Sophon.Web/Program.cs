@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 using Sophon.Infrastructure.Data;
 
 namespace Sophon.Web
@@ -15,6 +17,11 @@ namespace Sophon.Web
     {
         public static void Main(string[] args)
         {
+            //Log.Logger = new LoggerConfiguration()
+            //    .MinimumLevel.Debug()
+            //    .WriteTo.SQLite(@"c:\LocalDB\sophon.db", "logs")
+            //    .CreateLogger();
+
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
@@ -38,6 +45,19 @@ namespace Sophon.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSerilog((context, configuration) =>
+                    {
+                        configuration.MinimumLevel.Information()
+                        // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Error
+                        .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                        .MinimumLevel.Override("System", LogEventLevel.Error)
+                        .Enrich.FromLogContext()
+                        // 配置日志输出到控制台
+                        .WriteTo.Console()
+                        .WriteTo.SQLite(@"c:\LocalDB\sophon.db", "logs");
+                        // 创建 logger
+                        //.CreateLogger();
+                    });
                 });
     }
 }
