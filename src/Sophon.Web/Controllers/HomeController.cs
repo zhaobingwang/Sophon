@@ -22,7 +22,12 @@ namespace Sophon.Web.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogInformation("访问了Home/Index。。。");
+            _logger.LogTrace("Trace信息");
+            _logger.LogDebug("调试信息");
+            _logger.LogInformation("普通信息");
+            _logger.LogWarning("警告信息");
+            _logger.LogError("错误信息");
+            _logger.LogCritical("严重信息");
             return View();
         }
         public IActionResult TriggerError()

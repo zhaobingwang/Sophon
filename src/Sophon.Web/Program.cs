@@ -48,6 +48,7 @@ namespace Sophon.Web
                     webBuilder.UseSerilog((context, configuration) =>
                     {
                         configuration.MinimumLevel.Information()
+                        .MinimumLevel.Debug()
                         // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Error
                         .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                         .MinimumLevel.Override("System", LogEventLevel.Error)
