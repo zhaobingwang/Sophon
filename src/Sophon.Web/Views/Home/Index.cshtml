@@ -10,6 +10,14 @@
     <div class="col-6" id="ar" style="width:400px;height:300px;"></div>
 </div>
 
+<div class="row">
+    <div class="col-12" id="log-chart" style="width:800px;height:500px;"></div>
+</div>
+
+<div class="row">
+    <div class="col-12" id="log-chart-2" style="width:800px;height:500px;"></div>
+</div>
+
 
 
 @section Scripts{
@@ -18,6 +26,8 @@
         $(function () {
             init();
             initAssetRecords();
+            initLogChart();
+            initLogChart2();
         });
         function init() {
             // 基于准备好的dom，初始化echarts实例
@@ -149,6 +159,158 @@
                         legend: result.legend,
                         xAxis: result.xAxis,
                         series: result.series,
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
+
+                }
+            });
+        }
+
+        function initLogChart() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('log-chart'));
+
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                legend: {},
+                tooltip: {
+                    trigger: 'axis',
+                    showContent: false
+                },
+                dataset: {
+                    source: []
+                },
+                xAxis: { type: 'category' },
+                yAxis: { gridIndex: 0 },
+                grid: { top: '55%' },
+                series: [
+                    { type: 'line', smooth: true, seriesLayoutBy: 'row' },
+                    { type: 'line', smooth: true, seriesLayoutBy: 'row' },
+                    { type: 'line', smooth: true, seriesLayoutBy: 'row' },
+                    { type: 'line', smooth: true, seriesLayoutBy: 'row' },
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '30%',
+                        center: ['50%', '25%'],
+                        label: {
+                            formatter: '{b}: {@@2012} ({d}%)'
+                        },
+                        encode: {
+                            itemName: 'product',
+                            value: '2012',
+                            tooltip: '2012'
+                        }
+                    }
+                ]
+            });
+
+            myChart.on('updateAxisPointer', function (event) {
+                var xAxisInfo = event.axesInfo[0];
+                if (xAxisInfo) {
+                    var dimension = xAxisInfo.value + 1;
+                    myChart.setOption({
+                        series: {
+                            id: 'pie',
+                            label: {
+                                formatter: '{b}: {@@[' + dimension + ']} ({d}%)'
+                            },
+                            encode: {
+                                value: dimension,
+                                tooltip: dimension
+                            }
+                        }
+                    });
+                }
+            });
+
+            myChart.showLoading();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "api/log/statistics/today",
+                dataType: "json",
+                success: function (result) {
+                    myChart.hideLoading();
+                    var series = [];
+                    for (var i = 0; i < result.source.length - 1; i++) {
+                        series.push({ type: 'line', smooth: true, seriesLayoutBy: 'row' });
+                    }
+                    console.log(result.source[0][1]);
+                    series.push({
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '30%',
+                        center: ['50%', '25%'],
+                        label: {
+                            formatter: '{b}: {@@' + result.source[0][1] + '} ({d}%)'
+                        },
+                        encode: {
+                            itemName: 'Level',
+                            value: result.source[0][1],
+                            tooltip: result.source[0][1]
+                        }
+                    })
+                    myChart.setOption({
+                        dataset: {
+                            source: result.source,
+                        },
+                        series: series
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
+
+                }
+            });
+        }
+
+        function initLogChart2() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('log-chart-2'));
+
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source: []
+                },
+                xAxis: [
+                    { type: 'category', gridIndex: 0 },
+                    //{ type: 'category', gridIndex: 1 }
+                ],
+                yAxis: [
+                    { gridIndex: 0 },
+                    //{ gridIndex: 1 }
+                ],
+                grid: [
+                    { bottom: '55%' },
+                    { top: '55%' }
+                ],
+                series: [
+
+                ]
+            });
+            myChart.showLoading();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "api/log/statistics/today",
+                dataType: "json",
+                success: function (result) {
+                    myChart.hideLoading();
+                    var series = [];
+                    for (var i = 0; i < result.source.length; i++) {
+                        series.push({ type: 'bar', seriesLayoutBy: 'row' },);
+                    }
+                    myChart.setOption({
+                        dataset: {
+                            source: result.source,
+                        },
+                        series: series
                     });
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {

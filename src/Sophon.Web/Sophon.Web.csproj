@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Sophon.DV\Sophon.DV.Echarts\Sophon.DV.Echarts.csproj" />
     <ProjectReference Include="..\Sophon.Infrastructure\Sophon.Infrastructure.csproj" />
   </ItemGroup>
 

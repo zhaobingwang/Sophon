@@ -64,5 +64,28 @@ namespace Sophon.Infrastructure.Services
                 return new LayuiTablePageVO(logs, count, 1, "success");
             }
         }
+
+        public async Task<IEnumerable<Log>> GetLogsAsync(DateTime? startTime, DateTime? endTime)
+        {
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("SQLite")))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                string sql = "SELECT * FROM logs WHERE 1=1 ";
+                string where = string.Empty;
+                if (startTime.HasValue)
+                {
+                    where += "AND timestamp >=@StartDate ";
+                    parameters.Add("StartDate", startTime.Value.ToString("yyyy-MM-ddTHH:mm:ss"));
+                }
+                if (endTime.HasValue)
+                {
+                    where += "AND timestamp <=@EndDate ";
+                    parameters.Add("EndDate", endTime.Value.AddDays(1).AddSeconds(-1).ToString("yyyy-MM-ddTHH:mm:ss"));
+                }
+                sql += where;
+                var datas = await connection.QueryAsync<Log>(sql, parameters);
+                return datas;
+            }
+        }
     }
 }
