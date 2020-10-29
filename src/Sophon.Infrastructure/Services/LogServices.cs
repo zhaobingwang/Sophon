@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sophon.Toolkit;
+using Microsoft.Data.SqlClient;
 
 namespace Sophon.Infrastructure.Services
 {
@@ -25,21 +26,21 @@ namespace Sophon.Infrastructure.Services
 
         public async Task<LayuiTablePageVO> ListPageAsync(QueryLogsVO vo)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("SQLite")))
+            using (IDbConnection connection = new SqlConnection(_configuration.GetConnectionString("MSSQL")))
             {
                 DynamicParameters parameters = new DynamicParameters();
                 string where = string.Empty;
-                string sqlData = "SELECT * FROM logs WHERE 1=1 ";// string.Format("SELECT * FROM logs ORDER BY TIMESTAMP DESC limit {0} offset {0}*{1}", vo.Limit, vo.Page - 1);
-                string sqlCount = "SELECT count() FROM logs WHERE 1=1 ";
+                string sqlData = "SELECT * FROM log WHERE 1=1 ";// string.Format("SELECT * FROM logs ORDER BY TIMESTAMP DESC limit {0} offset {0}*{1}", vo.Limit, vo.Page - 1);
+                string sqlCount = "SELECT count() FROM log WHERE 1=1 ";
                 if (vo.StartDate.HasValue)
                 {
                     where += "AND timestamp >=@StartDate ";
-                    parameters.Add("StartDate", vo.StartDate.Value.ToString("yyyy-MM-ddTHH:mm:ss"));
+                    parameters.Add("StartDate", vo.StartDate.Value);
                 }
                 if (vo.EndDate.HasValue)
                 {
                     where += "AND timestamp <=@EndDate ";
-                    parameters.Add("EndDate", vo.EndDate.Value.AddDays(1).AddSeconds(-1).ToString("yyyy-MM-ddTHH:mm:ss"));
+                    parameters.Add("EndDate", vo.EndDate.Value.AddDays(1).AddSeconds(-1));
                 }
 
                 if (!vo.Level.IsNullOrWhiteSpace())
@@ -50,7 +51,7 @@ namespace Sophon.Infrastructure.Services
 
                 if (!vo.Message.IsNullOrWhiteSpace())
                 {
-                    where += "AND (RenderedMessage like @Message ";
+                    where += "AND (Message like @Message ";
                     where += "OR Exception like @Message) ";
                     parameters.Add("Message", "%" + vo.Message + "%");
                 }
@@ -67,20 +68,20 @@ namespace Sophon.Infrastructure.Services
 
         public async Task<IEnumerable<Log>> GetLogsAsync(DateTime? startTime, DateTime? endTime)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("SQLite")))
+            using (IDbConnection connection = new SqlConnection(_configuration.GetConnectionString("MSSQL")))
             {
                 DynamicParameters parameters = new DynamicParameters();
-                string sql = "SELECT * FROM logs WHERE 1=1 ";
+                string sql = "SELECT * FROM log WHERE 1=1 ";
                 string where = string.Empty;
                 if (startTime.HasValue)
                 {
                     where += "AND timestamp >=@StartDate ";
-                    parameters.Add("StartDate", startTime.Value.ToString("yyyy-MM-ddTHH:mm:ss"));
+                    parameters.Add("StartDate", startTime.Value);
                 }
                 if (endTime.HasValue)
                 {
                     where += "AND timestamp <=@EndDate ";
-                    parameters.Add("EndDate", endTime.Value.AddDays(1).AddSeconds(-1).ToString("yyyy-MM-ddTHH:mm:ss"));
+                    parameters.Add("EndDate", endTime.Value.AddDays(1).AddSeconds(-1));
                 }
                 sql += where;
                 var datas = await connection.QueryAsync<Log>(sql, parameters);

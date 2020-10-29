@@ -2,10 +2,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sophon.Infrastructure.Data;
 
-namespace Sophon.Infrastructure.Data.Migrations
+namespace Sophon.Infrastructure.Data.MSSQL.Migrations
 {
     [DbContext(typeof(SophonDbContext))]
     partial class SophonDbContextModelSnapshot : ModelSnapshot
@@ -14,46 +15,59 @@ namespace Sophon.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9");
+                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Sophon.Infrastructure.Entities.AssetRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnName("id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("AggregateAmount")
-                        .HasColumnType("TEXT");
+                        .HasColumnName("aggregate_amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreateTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnName("create_time")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IsDeleted")
-                        .HasColumnType("INTEGER");
+                        .HasColumnName("is_deleted")
+                        .HasColumnType("int");
 
                     b.Property<string>("TypeCode")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnName("type_code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeName")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnName("type_name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("asset_records");
+                    b.ToTable("asset_record");
                 });
 
             modelBuilder.Entity("Sophon.Infrastructure.Entities.AssetType", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnType("TEXT");
+                        .HasColumnName("code")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<short>("Method")
-                        .HasColumnType("INTEGER");
+                        .HasColumnName("method")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnName("name")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Code");
 

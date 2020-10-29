@@ -32,7 +32,7 @@ namespace Sophon.Web
             );
             services.AddDbContext<SophonDbContext>(option =>
             {
-                option.UseSqlite(Configuration.GetConnectionString("SQLite"));
+                option.UseSqlServer(Configuration.GetConnectionString("MSSQL"));
             });
 
             services.AddSophonService();
