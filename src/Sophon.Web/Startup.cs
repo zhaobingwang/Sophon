@@ -12,6 +12,8 @@ using Sophon.Infrastructure.Data;
 using Sophon.Infrastructure.Services;
 using Sophon.Web.Extensions;
 using Sophon.Web.Filter;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace Sophon.Web
 {
@@ -27,6 +29,23 @@ namespace Sophon.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("MSSQL"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+
             services.AddControllersWithViews(options =>
                 options.Filters.Add<CustomExceptionFilter>()
             );
@@ -39,7 +58,7 @@ namespace Sophon.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +70,9 @@ namespace Sophon.Web
             }
             app.UseStaticFiles();
 
+            app.UseHangfireDashboard();
+            backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -60,6 +82,7 @@ namespace Sophon.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHangfireDashboard();
             });
         }
     }
