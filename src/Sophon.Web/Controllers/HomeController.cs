@@ -6,9 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Sophon.Infrastructure.Services;
+using Sophon.Web.Hubs;
 using Sophon.Web.Models;
 
 namespace Sophon.Web.Controllers
@@ -16,10 +18,12 @@ namespace Sophon.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHubContext<NotificationHub> _notificationHubContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationHubContext)
         {
             _logger = logger;
+            _notificationHubContext = notificationHubContext;
         }
 
         public IActionResult Index()
@@ -31,6 +35,9 @@ namespace Sophon.Web.Controllers
             //_logger.LogError("错误信息");
             //_logger.LogCritical("严重信息");
             RecurringJob.AddOrUpdate(() => TestRecurringJob($"{DateTime.Now}# 测试周期性后台任务(每分钟执行一次)"), "*/1 * * * *", TimeZoneInfo.Utc);
+
+            RecurringJob.AddOrUpdate(() => TestNotificationHubJob(), "*/1 * * * *", TimeZoneInfo.Utc);
+
             // 执行达不到预期
             //RecurringJob.AddOrUpdate(() => TestRecurringJob($"{DateTime.Now}# 测试周期性后台任务(每5秒执行一次)"),"*/10 * * * * *", TimeZoneInfo.Utc);
 
@@ -41,6 +48,13 @@ namespace Sophon.Web.Controllers
         public void TestRecurringJob(string message)
         {
             _logger.LogDebug(message);
+        }
+
+        public async Task TestNotificationHubJob()
+        {
+            string message = $"消息已通知# {DateTime.UtcNow}";
+            _logger.LogInformation(message);
+            await _notificationHubContext.Clients.All.SendAsync("Notify", message);
         }
 
         public IActionResult TriggerError()

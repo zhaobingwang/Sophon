@@ -14,6 +14,7 @@ using Sophon.Web.Extensions;
 using Sophon.Web.Filter;
 using Hangfire;
 using Hangfire.SqlServer;
+using Sophon.Web.Hubs;
 
 namespace Sophon.Web
 {
@@ -49,6 +50,9 @@ namespace Sophon.Web
             services.AddControllersWithViews(options =>
                 options.Filters.Add<CustomExceptionFilter>()
             );
+
+            services.AddSignalR();
+
             services.AddDbContext<SophonDbContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("MSSQL"));
@@ -83,6 +87,8 @@ namespace Sophon.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHangfireDashboard();
+                endpoints.MapHub<TestHub>("/testhub");
+                endpoints.MapHub<NotificationHub>("/notificationHub");
             });
         }
     }
