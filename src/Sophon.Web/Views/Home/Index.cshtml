@@ -19,31 +19,6 @@
 </div>
 
 
-<div class="row">&nbsp;</div>
-<div class="row">
-    <div class="col-2">User</div>
-    <div class="col-4"><input type="text" id="userInput" /></div>
-</div>
-<div class="row">
-    <div class="col-2">Message</div>
-    <div class="col-4"><input type="text" id="messageInput" /></div>
-</div>
-<div class="row">&nbsp;</div>
-<div class="row">
-    <div class="col-6">
-        <input type="button" id="sendButton" value="Send Message" />
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList"></ul>
-    </div>
-</div>
-
-
-
-
 @section Scripts{
     <script src="~/lib/echarts/dist/echarts.min.js"></script>
     <script type="text/javascript">
@@ -346,35 +321,27 @@
         }
 
         function hubMessage() {
-            //var connection = new signalR.HubConnectionBuilder().withUrl("/testHub").build();
             var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
-
-            //Disable send button until connection is established
-            document.getElementById("sendButton").disabled = true;
-
-            //connection.on("ReceiveMessage", function (message) {
             connection.on("Notify", function (message) {
-                //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                //var encodedMsg = msg;
-                var li = document.createElement("li");
-                //li.textContent = encodedMsg;
-                li.textContent = message;
-                document.getElementById("messagesList").appendChild(li);
+                // positionClass
+                //toast - top - left  顶端左边
+                //toast - top - right    顶端右边
+                //toast - top - center  顶端中间
+                //toast - top - full - width 顶端，宽度铺满整个屏幕
+                //toast - botton - right
+                //toast - bottom - left
+                //toast - bottom - center
+                //toast - bottom - full - width
+                toastr.options = {
+                    'timeOut': '5000',
+                    "positionClass": "toast-top-left",
+                }
+                toastr.info(message, '服务端推送的消息')
             });
 
             connection.start().then(function () {
-                document.getElementById("sendButton").disabled = false;
             }).catch(function (err) {
-                return console.error(err.toString());
-            });
-
-            document.getElementById("sendButton").addEventListener("click", function (event) {
-                //var user = document.getElementById("userInput").value;
-                var message = document.getElementById("messageInput").value;
-                connection.invoke("PushMessage", message).catch(function (err) {
-                    return console.error(err.toString());
-                });
-                event.preventDefault();
+                toastr.error(err.toString())
             });
         }
     </script>

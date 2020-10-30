@@ -37,6 +37,17 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "toastr@2.1.4",
+      "destination": "wwwroot/lib/toastr/",
+      "files": [
+        "build/toastr.css",
+        "build/toastr.js.map",
+        "build/toastr.min.css",
+        "build/toastr.min.js"
+      ]
     }
   ]
 }
