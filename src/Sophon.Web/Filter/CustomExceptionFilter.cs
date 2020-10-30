@@ -36,12 +36,12 @@ namespace Sophon.Web.Filter
             //}
             _logger.LogError(context.Exception.Message, context.Exception);
 
-            var result = new ViewResult { ViewName = "CustomError" };
-            result.ViewData = new ViewDataDictionary(_modelMetadataProvider,
-                                                        context.ModelState);
-            result.ViewData.Add("Exception", context.Exception);
+            //var result = new ViewResult { ViewName = "Error" };
+            //result.ViewData = new ViewDataDictionary(_modelMetadataProvider,
+            //                                            context.ModelState);
+            //result.ViewData.Add("Exception", context.Exception);
             // TODO: Pass additional detailed data via ViewData
-            context.Result = result;
+            //context.Result = result;
         }
     }
 }

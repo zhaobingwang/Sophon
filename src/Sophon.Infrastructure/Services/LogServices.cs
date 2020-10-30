@@ -31,7 +31,7 @@ namespace Sophon.Infrastructure.Services
                 DynamicParameters parameters = new DynamicParameters();
                 string where = string.Empty;
                 string sqlData = "SELECT * FROM log WHERE 1=1 ";// string.Format("SELECT * FROM logs ORDER BY TIMESTAMP DESC limit {0} offset {0}*{1}", vo.Limit, vo.Page - 1);
-                string sqlCount = "SELECT count() FROM log WHERE 1=1 ";
+                string sqlCount = "SELECT count(1) FROM log WHERE 1=1 ";
                 if (vo.StartDate.HasValue)
                 {
                     where += "AND timestamp >=@StartDate ";
@@ -51,14 +51,14 @@ namespace Sophon.Infrastructure.Services
 
                 if (!vo.Message.IsNullOrWhiteSpace())
                 {
-                    where += "AND (Message like @Message ";
-                    where += "OR Exception like @Message) ";
+                    where += "and (Message like @Message ";
+                    where += " Exception like @Message) ";
                     parameters.Add("Message", "%" + vo.Message + "%");
                 }
                 sqlData += where;
                 sqlCount += where;
 
-                sqlData = string.Format(sqlData += "ORDER BY TIMESTAMP DESC limit {0} offset {0}*{1}", vo.Limit, vo.Page - 1);
+                sqlData = string.Format(sqlData += "order by timestamp desc offset {0}*{1} rows fetch next {0} rows only", vo.Limit, vo.Page - 1);
 
                 var logs = await connection.QueryAsync<Log>(sqlData, parameters);
                 var count = await connection.ExecuteScalarAsync<int>(sqlCount, parameters);
