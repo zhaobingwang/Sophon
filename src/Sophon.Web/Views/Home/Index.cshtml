@@ -321,7 +321,7 @@
         }
 
         function hubMessage() {
-            var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+            var connection = new signalR.HubConnectionBuilder().withUrl("/msghub/notify").build();
             connection.on("Notify", function (message) {
                 // positionClass
                 //toast - top - left  顶端左边
@@ -334,7 +334,7 @@
                 //toast - bottom - full - width
                 toastr.options = {
                     'timeOut': '5000',
-                    "positionClass": "toast-top-left",
+                    "positionClass": "toast-top-right",
                 }
                 toastr.info(message, '服务端推送的消息')
             });

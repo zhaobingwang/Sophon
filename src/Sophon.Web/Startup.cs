@@ -87,8 +87,8 @@ namespace Sophon.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHangfireDashboard();
-                endpoints.MapHub<TestHub>("/testhub");
-                endpoints.MapHub<NotificationHub>("/notificationHub");
+                //endpoints.MapHub<TestHub>("/msghub/test");
+                endpoints.MapHub<NotificationHub>("/msghub/notify");
             });
         }
     }
