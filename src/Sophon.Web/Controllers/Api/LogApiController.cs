@@ -72,7 +72,7 @@ namespace Sophon.Web.Controllers.Api
             string dateFormat = "yyyy年MM月dd日";
             if (latestDays < 0 || latestDays > 15)
             {
-                return Ok("nameof(latestDays)}最大不能超过15且不能小于0");
+                return Ok($"{nameof(latestDays)}最大不能超过15且不能小于0");
             }
             if (latestDays > 7)
             {
