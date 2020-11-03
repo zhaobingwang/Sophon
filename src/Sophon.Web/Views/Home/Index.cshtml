@@ -18,6 +18,10 @@
     <div class="col-12" id="log-chart-2" style="width:800px;height:500px;"></div>
 </div>
 
+<div class="row">
+    <div class="col-12" id="log-chart-3" style="width:800px;height:500px;"></div>
+</div>
+
 
 @section Scripts{
     <script src="~/lib/echarts/dist/echarts.min.js"></script>
@@ -27,6 +31,7 @@
             initAssetRecords();
             initLogChart();
             initLogChart2();
+            initLogChart3();
             hubMessage();
         });
         function init() {
@@ -303,7 +308,61 @@
                 success: function (result) {
                     myChart.hideLoading();
                     var series = [];
-                    for (var i = 0; i < result.source.length; i++) {
+                    for (var i = 0; i < result.source.length - 1; i++) {
+                        series.push({ type: 'bar', seriesLayoutBy: 'row' },);
+                    }
+                    myChart.setOption({
+                        dataset: {
+                            source: result.source,
+                        },
+                        series: series
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
+
+                }
+            });
+        }
+
+
+        function initLogChart3() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('log-chart-3'));
+
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source: []
+                },
+                xAxis: [
+                    { type: 'category', gridIndex: 0 },
+                    //{ type: 'category', gridIndex: 1 }
+                ],
+                yAxis: [
+                    { gridIndex: 0 },
+                    //{ gridIndex: 1 }
+                ],
+                grid: [
+                    { bottom: '55%' },
+                    //{ top: '55%' }
+                ],
+                series: [
+
+                ]
+            });
+            myChart.showLoading();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "api/log/statistics/latest7days",
+                dataType: "json",
+                success: function (result) {
+                    myChart.hideLoading();
+                    var series = [];
+                    for (var i = 0; i < result.source.length - 1; i++) {
                         series.push({ type: 'bar', seriesLayoutBy: 'row' },);
                     }
                     myChart.setOption({
