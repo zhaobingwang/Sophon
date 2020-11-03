@@ -29,13 +29,35 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
+            this.icnMain = new System.Windows.Forms.NotifyIcon(this.components);
+            this.cmsNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsNotify.SuspendLayout();
             this.SuspendLayout();
             // 
-            // notifyIcon1
+            // icnMain
             // 
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
+            this.icnMain.ContextMenuStrip = this.cmsNotify;
+            this.icnMain.Icon = ((System.Drawing.Icon)(resources.GetObject("icnMain.Icon")));
+            this.icnMain.Text = "Sophon";
+            this.icnMain.Visible = true;
+            this.icnMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIconMain_MouseDoubleClick);
+            // 
+            // cmsNotify
+            // 
+            this.cmsNotify.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.cmsNotify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExit});
+            this.cmsNotify.Name = "cmsNotify";
+            this.cmsNotify.Size = new System.Drawing.Size(117, 34);
+            // 
+            // menuItemExit
+            // 
+            this.menuItemExit.Name = "menuItemExit";
+            this.menuItemExit.Size = new System.Drawing.Size(116, 30);
+            this.menuItemExit.Text = "退出";
+            this.menuItemExit.ToolTipText = "退出程序";
             // 
             // Home
             // 
@@ -45,13 +67,17 @@
             this.Name = "Home";
             this.Text = "Home";
             this.Load += new System.EventHandler(this.Home_Load);
+            this.SizeChanged += new System.EventHandler(this.Home_SizeChanged);
+            this.cmsNotify.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.NotifyIcon icnMain;
+        private System.Windows.Forms.ContextMenuStrip cmsNotify;
+        private System.Windows.Forms.ToolStripMenuItem menuItemExit;
     }
 }
 

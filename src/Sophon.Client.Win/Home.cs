@@ -17,6 +17,8 @@ namespace Sophon.Client.Win
         public Home()
         {
             InitializeComponent();
+            BindEvent();
+
 
             connection = new HubConnectionBuilder()
              .WithUrl("http://localhost:5000/msghub/notify")
@@ -30,17 +32,52 @@ namespace Sophon.Client.Win
             };
         }
 
+        private void BindEvent()
+        {
+            menuItemExit.Click += MenuItemExit_Click;
+        }
+
+        private void MenuItemExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private async void Home_Load(object sender, EventArgs e)
         {
 
             connection.On<string>("Notify", (message) =>
             {
-                notifyIcon1.Icon = SystemIcons.Exclamation;
-                notifyIcon1.Visible = true;
-                notifyIcon1.ShowBalloonTip(20000, "来自服务端推送的消息", message, ToolTipIcon.Info);
+                icnMain.Icon = SystemIcons.Exclamation;
+                icnMain.Visible = true;
+                icnMain.ShowBalloonTip(20000, "来自服务端推送的消息", message, ToolTipIcon.Info);
             });
             await connection.StartAsync();
         }
 
+        private void Home_SizeChanged(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                // 隐藏任务栏图标
+                ShowInTaskbar = false;
+                // 图标显示在托盘栏
+                icnMain.Visible = true;
+            }
+        }
+
+        private void notifyIconMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                // 还原窗体显示    
+                WindowState = FormWindowState.Normal;
+                // 激活窗体并给予它焦点
+                Activate();
+                // 任务栏区显示图标
+                ShowInTaskbar = true;
+                // 托盘区图标隐藏
+                icnMain.Visible = false;
+            }
+        }
     }
 }
