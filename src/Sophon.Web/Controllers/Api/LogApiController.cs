@@ -55,7 +55,10 @@ namespace Sophon.Web.Controllers.Api
             for (int i = 0; i < level.Count; i++)
             {
                 current = new string[xSize];
-                var curLevelLogs = todayLogs.Where(x => x.Level == level[i]).GroupBy(x => x.Timestamp.Hour.ToString()).Select(x => new KV { Key = x.Key, Value = x.Count(y => true).ToString() }).ToList();
+                var curLevelLogs = todayLogs.Where(x => x.Level == level[i])
+                    .GroupBy(x => x.Timestamp.Hour)
+                    .Select(x => new KeyValuePair<int, string>(x.Key, x.Count(y => true).ToString()))
+                    .ToList();
 
                 for (int j = 0; j < xSize; j++)
                 {
@@ -65,8 +68,8 @@ namespace Sophon.Web.Controllers.Api
                     }
                     else
                     {
-                        var exists = curLevelLogs.Count(x => x.Key == (j - 1).ToString()) == 1;
-                        current[j] = exists ? curLevelLogs.FirstOrDefault(x => x.Key == (j - 1).ToString()).Value : "0";
+                        var exists = curLevelLogs.Count(x => x.Key == (j - 1)) == 1;
+                        current[j] = exists ? curLevelLogs.FirstOrDefault(x => x.Key == (j - 1)).Value : "0";
                     }
                 }
                 row.Add(current);
@@ -102,7 +105,10 @@ namespace Sophon.Web.Controllers.Api
             for (int i = 0; i < level.Count; i++)
             {
                 current = new string[xSize];
-                var curLevelLogs = latest7DaysLogs.Where(x => x.Level == level[i]).GroupBy(x => x.Timestamp.Date.ToString("yyyyMMdd")).Select(x => new KV { Key = x.Key, Value = x.Count(y => true).ToString() }).ToList();
+                var curLevelLogs = latest7DaysLogs.Where(x => x.Level == level[i])
+                    .GroupBy(x => x.Timestamp.Date.ToString("yyyyMMdd"))
+                    .Select(x => new KeyValuePair<string, string>(x.Key, x.Count(y => true).ToString()))
+                    .ToList();
 
                 for (int j = 0; j < xSize; j++)
                 {
@@ -122,12 +128,6 @@ namespace Sophon.Web.Controllers.Api
             DataSets dataSets = new DataSets();
             dataSets.Source = row;
             return Ok(dataSets);
-        }
-
-        private class KV
-        {
-            public string Key { get; set; }
-            public string Value { get; set; }
         }
     }
 }
