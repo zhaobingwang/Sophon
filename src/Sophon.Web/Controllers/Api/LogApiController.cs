@@ -32,102 +32,115 @@ namespace Sophon.Web.Controllers.Api
         [HttpGet("statistics/today")]
         public async Task<IActionResult> TodayLogs()
         {
-            int xSize = 25;
+            var now = DateTime.Now;
             List<string> level = new List<string> { "Debug", "Information", "Warning", "Error", "Fatal" };
-            List<string[]> row = new List<string[]>();
-            string[] current = new string[xSize];
-            for (int i = 0; i < xSize; i++)
-            {
-                if (i == 0)
-                {
-                    current[i] = "Level";
-                }
-                else
-                {
-                    current[i] = $"{i - 1}";
-                }
-            }
-            row.Add(current);
+            List<string[]> rows = new List<string[]>();
+            string[] lineOne = GetHours();
+            rows.Add(FormatRowData("Level", lineOne));
+
 
             // 获取当日所有日志
-            var now = DateTime.Now;
             var todayLogs = await _logServices.GetLogsAsync(now.StartOfCurrentDay(), now.EndOfCurrentDay());
             for (int i = 0; i < level.Count; i++)
             {
-                current = new string[xSize];
+                var current = new string[lineOne.Length];
+                // 当前等级日志按小时分组
                 var curLevelLogs = todayLogs.Where(x => x.Level == level[i])
-                    .GroupBy(x => x.Timestamp.Hour)
-                    .Select(x => new KeyValuePair<int, string>(x.Key, x.Count(y => true).ToString()))
+                    .GroupBy(x => x.Timestamp.Hour.ToString().PadLeft(2, '0') + ":00")
+                    .Select(x => new KeyValuePair<string, string>(x.Key, x.Count(y => true).ToString()))
+                    .OrderBy(x => x.Key)
                     .ToList();
 
-                for (int j = 0; j < xSize; j++)
+                // 当前时辰不存在记录则返回0
+                for (int j = 0; j < lineOne.Length; j++)
                 {
-                    if (j == 0)
-                    {
-                        current[j] = level[i];
-                    }
-                    else
-                    {
-                        var exists = curLevelLogs.Count(x => x.Key == (j - 1)) == 1;
-                        current[j] = exists ? curLevelLogs.FirstOrDefault(x => x.Key == (j - 1)).Value : "0";
-                    }
+                    var exists = curLevelLogs.Count(x => x.Key == lineOne[j]) == 1;
+                    current[j] = exists ? curLevelLogs.FirstOrDefault(x => x.Key == lineOne[j]).Value : "0";
                 }
-                row.Add(current);
+
+                // 添加当前行数据
+                rows.Add(FormatRowData(level[i], current));
             }
             DataSets dataSets = new DataSets();
-            dataSets.Source = row;
+            dataSets.Source = rows;
             return Ok(dataSets);
         }
 
-        [HttpGet("statistics/latest7days")]
-        public async Task<IActionResult> Latest7DaysLogs()
+        [HttpGet("statistics/latestndays")]
+        public async Task<IActionResult> Latest7DaysLogs(int latestDays = 7)
         {
-            int xSize = 8;
-            List<string> level = new List<string> { "Debug", "Information", "Warning", "Error", "Fatal" };
-            List<string[]> row = new List<string[]>();
-            string[] current = new string[xSize];
-            for (int i = 0; i < xSize; i++)
+            string dateFormat = "yyyy年MM月dd日";
+            if (latestDays < 0 || latestDays > 15)
             {
-                if (i == 0)
-                {
-                    current[i] = "Level";
-                }
-                else
-                {
-                    current[i] = DateTime.Now.AddDays(i - xSize + 1).ToString("yyyyMMdd"); // $"{i - 1}";
-                }
+                return Ok("nameof(latestDays)}最大不能超过15且不能小于0");
             }
-            row.Add(current);
+            if (latestDays > 7)
+            {
+                dateFormat = "yyyyMMdd";
+            }
+            var now = DateTime.Now;
+            List<string> level = new List<string> { "Debug", "Information", "Warning", "Error", "Fatal" };
+            List<string[]> rows = new List<string[]>();
+
+            string[] lineOne = GetLatestNDays(now, latestDays, dateFormat);
+            rows.Add(FormatRowData("Level", lineOne));
 
             // 获取当日所有日志
-            var now = DateTime.Now;
-            var latest7DaysLogs = await _logServices.GetLogsAsync(now.AddDays(-7).StartOfCurrentDay(), now.EndOfCurrentDay());
+            var latest7DaysLogs = await _logServices.GetLogsAsync(now.AddDays(-1 * latestDays).StartOfCurrentDay(), now.EndOfCurrentDay());
             for (int i = 0; i < level.Count; i++)
             {
-                current = new string[xSize];
+                var current = new string[lineOne.Length];
+                // 当前等级日志按天分组
                 var curLevelLogs = latest7DaysLogs.Where(x => x.Level == level[i])
-                    .GroupBy(x => x.Timestamp.Date.ToString("yyyyMMdd"))
+                    .GroupBy(x => x.Timestamp.Date.ToString(dateFormat))
                     .Select(x => new KeyValuePair<string, string>(x.Key, x.Count(y => true).ToString()))
+                    .OrderBy(x => x.Key)
                     .ToList();
-
-                for (int j = 0; j < xSize; j++)
+                // 当天不存在记录则返回0
+                for (int j = 0; j < lineOne.Length; j++)
                 {
-                    if (j == 0)
-                    {
-                        current[j] = level[i];
-                    }
-                    else
-                    {
-                        var curDay = DateTime.Now.AddDays(j - xSize + 1).ToString("yyyyMMdd");
-                        var exists = curLevelLogs.Count(x => x.Key == curDay) == 1;
-                        current[j] = exists ? curLevelLogs.FirstOrDefault(x => x.Key == curDay).Value : "0";
-                    }
+                    var curDay = DateTime.Now.AddDays(j - latestDays + 1).ToString(dateFormat);
+                    var exists = curLevelLogs.Count(x => x.Key == curDay) == 1;
+                    current[j] = exists ? curLevelLogs.FirstOrDefault(x => x.Key == curDay).Value : "0";
                 }
-                row.Add(current);
+                // 添加当前行数据
+                rows.Add(FormatRowData(level[i], current));
             }
             DataSets dataSets = new DataSets();
-            dataSets.Source = row;
+            dataSets.Source = rows;
             return Ok(dataSets);
+        }
+
+        private string[] FormatRowData(string category, string[] datas)
+        {
+            string[] header = new string[datas.Length + 1];
+            header[0] = category;
+            for (int i = 0; i < datas.Length; i++)
+            {
+                header[i + 1] = datas[i];
+            }
+            return header;
+        }
+
+        private string[] GetHours()
+        {
+            const int MAX_HOUR = 24;
+            string[] result = new string[MAX_HOUR];
+            for (int i = 0; i < MAX_HOUR; i++)
+            {
+                result[i] = i.ToString().PadLeft(2, '0') + ":00";
+            }
+            return result;
+        }
+
+        private string[] GetLatestNDays(DateTime now, int maxDays, string dateFormat)
+        {
+            string[] result = new string[maxDays];
+            for (int i = 0; i < maxDays; i++)
+            {
+                result[i] = DateTime.Now.AddDays(i - maxDays + 1).ToString(dateFormat);
+            }
+            return result;
         }
     }
 }

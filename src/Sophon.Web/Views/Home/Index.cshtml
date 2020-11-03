@@ -22,6 +22,10 @@
     <div class="col-12" id="log-chart-3" style="width:800px;height:500px;"></div>
 </div>
 
+<div class="row">
+    <div class="col-12" id="log-chart-4" style="width:800px;height:500px;"></div>
+</div>
+
 
 @section Scripts{
     <script src="~/lib/echarts/dist/echarts.min.js"></script>
@@ -32,6 +36,7 @@
             initLogChart();
             initLogChart2();
             initLogChart3();
+            initLogChart4();
             hubMessage();
         });
         function init() {
@@ -250,12 +255,12 @@
                         radius: '30%',
                         center: ['50%', '25%'],
                         label: {
-                            formatter: '{b}: {@@' + result.source[0][1] + '} ({d}%)'
+                            formatter: '{b}: {@@' + result.source[0][12] + '} ({d}%)'
                         },
                         encode: {
                             itemName: 'Level',
-                            value: result.source[0][1],
-                            tooltip: result.source[0][1]
+                            value: result.source[0][12],
+                            tooltip: result.source[0][12]
                         }
                     })
                     myChart.setOption({
@@ -325,7 +330,6 @@
             });
         }
 
-
         function initLogChart3() {
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('log-chart-3'));
@@ -357,7 +361,60 @@
             $.ajax({
                 type: "GET",
                 async: true,
-                url: "api/log/statistics/latest7days",
+                url: "api/log/statistics/latestndays?latestDays=7",
+                dataType: "json",
+                success: function (result) {
+                    myChart.hideLoading();
+                    var series = [];
+                    for (var i = 0; i < result.source.length - 1; i++) {
+                        series.push({ type: 'bar', seriesLayoutBy: 'row' },);
+                    }
+                    myChart.setOption({
+                        dataset: {
+                            source: result.source,
+                        },
+                        series: series
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.responseText);
+
+                }
+            });
+        }
+
+        function initLogChart4() {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('log-chart-4'));
+
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source: []
+                },
+                xAxis: [
+                    { type: 'category', gridIndex: 0 },
+                    //{ type: 'category', gridIndex: 1 }
+                ],
+                yAxis: [
+                    { gridIndex: 0 },
+                    //{ gridIndex: 1 }
+                ],
+                grid: [
+                    { bottom: '55%' },
+                    //{ top: '55%' }
+                ],
+                series: [
+
+                ]
+            });
+            myChart.showLoading();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "api/log/statistics/latestndays?latestDays=15",
                 dataType: "json",
                 success: function (result) {
                     myChart.hideLoading();
