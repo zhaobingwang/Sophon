@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Sophon.DV\Sophon.DV.Echarts\Sophon.DV.Echarts.csproj" />
-    <ProjectReference Include="..\Sophon.Infrastructure\Sophon.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\Framework\Sophon.DV\Sophon.DV.Echarts\Sophon.DV.Echarts.csproj" />
+    <ProjectReference Include="..\Sophon.App.Assistant.Infrastructure\Sophon.App.Assistant.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
