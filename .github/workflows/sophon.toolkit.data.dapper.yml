@@ -1,0 +1,40 @@
+name: Sophon.Toolkit.Data.Dapper Release
+
+on:
+  push:
+    branches: [ release/sophon.toolkit.data.dapper ]
+
+jobs:
+  build:
+    name: Build Project Sophon.Toolkit.Data.Dapper
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore Framework/Sophon.Toolkit/Sophon.Toolkit.Data.sln
+    - name: Build
+      run: dotnet build Framework/Sophon.Toolkit/Sophon.Toolkit.Data.sln --configuration Release --no-restore
+    - name: Test
+      run: dotnet test Framework/Sophon.Toolkit/Sophon.Toolkit.Data.sln --no-restore --verbosity normal
+
+  publish:
+    needs: [build]
+    name: Publish Sophon.Toolkit.Data.Dapper To NuGet
+    runs-on: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Publish
+      run: |
+        dotnet build Framework/Sophon.Toolkit/src/Sophon.Toolkit.Data.Dapper --configuration Release
+        dotnet nuget push Framework/Sophon.Toolkit/src/Sophon.Toolkit.Data.Dapper/bin/Release/Sophon.Toolkit.Data.Dapper.*.nupkg -k ${APIKEY} -s https://www.nuget.org/api/v2/package
+      env:
+        APIKEY: ${{ secrets.nuget }}
