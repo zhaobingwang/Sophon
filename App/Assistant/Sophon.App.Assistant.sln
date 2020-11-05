@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.App.Assistant.Web", "src\Sophon.App.Assistant.Web\Sophon.App.Assistant.Web.csproj", "{95D93D67-DC5B-46D8-822E-F57136EEAEB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.App.Assistant.Infrastructure", "src\Sophon.App.Assistant.Infrastructure\Sophon.App.Assistant.Infrastructure.csproj", "{03995E3D-46A4-49C7-A985-13385343807C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.App.Assistant.Client.Win", "src\Sophon.App.Assistant.Client.Win\Sophon.App.Assistant.Client.Win.csproj", "{F41805F6-066A-4992-8A7E-7853C9AE98DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit", "..\..\Framework\Sophon.Toolkit\src\Sophon.Toolkit\Sophon.Toolkit.csproj", "{B5EF2B65-E696-4914-9761-5CAEB1C03625}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.DV.Echarts", "..\..\Framework\Sophon.DV\Sophon.DV.Echarts\Sophon.DV.Echarts.csproj", "{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95D93D67-DC5B-46D8-822E-F57136EEAEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D93D67-DC5B-46D8-822E-F57136EEAEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95D93D67-DC5B-46D8-822E-F57136EEAEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95D93D67-DC5B-46D8-822E-F57136EEAEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03995E3D-46A4-49C7-A985-13385343807C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03995E3D-46A4-49C7-A985-13385343807C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03995E3D-46A4-49C7-A985-13385343807C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03995E3D-46A4-49C7-A985-13385343807C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F41805F6-066A-4992-8A7E-7853C9AE98DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41805F6-066A-4992-8A7E-7853C9AE98DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41805F6-066A-4992-8A7E-7853C9AE98DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41805F6-066A-4992-8A7E-7853C9AE98DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5EF2B65-E696-4914-9761-5CAEB1C03625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5EF2B65-E696-4914-9761-5CAEB1C03625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5EF2B65-E696-4914-9761-5CAEB1C03625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5EF2B65-E696-4914-9761-5CAEB1C03625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FAC44E78-C147-43A8-A925-DA08628A71A3}
+	EndGlobalSection
+EndGlobal
