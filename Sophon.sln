@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.DV.Echarts", "Framew
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Client.Win", "src\Sophon.Client.Win\Sophon.Client.Win.csproj", "{5FC0115F-2BA6-46F0-BBFB-ADA26C740D3C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit", "Framework\Sophon.Toolkit\src\Sophon.Toolkit\Sophon.Toolkit.csproj", "{F229B9AB-193A-4FC5-8883-14E19F239AE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5FC0115F-2BA6-46F0-BBFB-ADA26C740D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC0115F-2BA6-46F0-BBFB-ADA26C740D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC0115F-2BA6-46F0-BBFB-ADA26C740D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F229B9AB-193A-4FC5-8883-14E19F239AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F229B9AB-193A-4FC5-8883-14E19F239AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F229B9AB-193A-4FC5-8883-14E19F239AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F229B9AB-193A-4FC5-8883-14E19F239AE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
