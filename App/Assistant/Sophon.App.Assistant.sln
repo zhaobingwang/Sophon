@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit", "..\..\Fra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.DV.Echarts", "..\..\Framework\Sophon.DV\Sophon.DV.Echarts\Sophon.DV.Echarts.csproj", "{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit.Tests", "..\..\Framework\Sophon.Toolkit\test\Sophon.Toolkit.Tests\Sophon.Toolkit.Tests.csproj", "{B8A0E05A-2003-48B7-8510-2393EE35D685}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "toolkit", "toolkit", "{8B52D731-D573-4F32-9572-457C79B15155}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{03C4A64E-ADB2-4BF6-894E-618C8419C30B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +45,21 @@ Global
 		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A0E05A-2003-48B7-8510-2393EE35D685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A0E05A-2003-48B7-8510-2393EE35D685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A0E05A-2003-48B7-8510-2393EE35D685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A0E05A-2003-48B7-8510-2393EE35D685}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95D93D67-DC5B-46D8-822E-F57136EEAEB8} = {03C4A64E-ADB2-4BF6-894E-618C8419C30B}
+		{03995E3D-46A4-49C7-A985-13385343807C} = {03C4A64E-ADB2-4BF6-894E-618C8419C30B}
+		{F41805F6-066A-4992-8A7E-7853C9AE98DA} = {03C4A64E-ADB2-4BF6-894E-618C8419C30B}
+		{B5EF2B65-E696-4914-9761-5CAEB1C03625} = {8B52D731-D573-4F32-9572-457C79B15155}
+		{04FD3E76-02E2-4D5E-B659-3A89B7C0F533} = {03C4A64E-ADB2-4BF6-894E-618C8419C30B}
+		{B8A0E05A-2003-48B7-8510-2393EE35D685} = {8B52D731-D573-4F32-9572-457C79B15155}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FAC44E78-C147-43A8-A925-DA08628A71A3}
