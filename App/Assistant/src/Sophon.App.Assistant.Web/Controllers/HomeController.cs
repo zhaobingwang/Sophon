@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Sophon.Infrastructure.Services;
+using Sophon.Toolkit;
 using Sophon.Web.Hubs;
 using Sophon.Web.Models;
 
@@ -33,7 +34,9 @@ namespace Sophon.Web.Controllers
             //_logger.LogInformation("普通信息");
             //_logger.LogWarning("警告信息");
             //_logger.LogError("错误信息");
-            _logger.LogCritical("严重信息");
+
+            //throw new BusinessException("A1001", "业务异常", "细节信息");
+
             RecurringJob.AddOrUpdate(() => TestRecurringJob($"{DateTime.Now}# 测试周期性后台任务(每分钟执行一次)"), "*/1 * * * *", TimeZoneInfo.Utc);
 
             RecurringJob.AddOrUpdate(() => TestNotificationHubJob(), "*/1 * * * *", TimeZoneInfo.Utc);
