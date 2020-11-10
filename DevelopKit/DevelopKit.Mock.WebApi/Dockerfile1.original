@@ -1,0 +1,22 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR bin
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR bin
+#COPY ["DevelopKit.Mock.WebApi/DevelopKit.Mock.WebApi.csproj", "DevelopKit.Mock.WebApi/"]
+COPY . .
+RUN dotnet restore "DevelopKit.Mock.WebApi.csproj"
+COPY . .
+WORKDIR "/src/DevelopKit.Mock.WebApi"
+RUN dotnet build "DevelopKit.Mock.WebApi.csproj" -c Release -o bin/build
+
+FROM build AS publish
+RUN dotnet publish "DevelopKit.Mock.WebApi.csproj" -c Release -o bin/publish
+
+FROM base AS final
+WORKDIR bin
+COPY --from=publish bin/publish .
+ENTRYPOINT ["dotnet", "DevelopKit.Mock.WebApi.dll"]
