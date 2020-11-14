@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sophon.Infrastructure.Data;
 
-namespace Sophon.Infrastructure.Data.MSSQL.Migrations
+namespace Sophon.App.Assistant.Infrastructure.Data.MSSQL.Migrations
 {
     [DbContext(typeof(SophonDbContext))]
     partial class SophonDbContextModelSnapshot : ModelSnapshot
@@ -23,58 +23,53 @@ namespace Sophon.Infrastructure.Data.MSSQL.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("AggregateAmount")
-                        .HasColumnName("aggregate_amount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreateTime")
-                        .HasColumnName("create_time")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IsDeleted")
-                        .HasColumnName("is_deleted")
                         .HasColumnType("int");
 
                     b.Property<string>("TypeCode")
                         .IsRequired()
-                        .HasColumnName("type_code")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.Property<string>("TypeName")
                         .IsRequired()
-                        .HasColumnName("type_name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.HasKey("Id");
 
-                    b.ToTable("asset_record");
+                    b.ToTable("AssetRecord");
                 });
 
             modelBuilder.Entity("Sophon.Infrastructure.Entities.AssetType", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnName("code")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.Property<short>("Method")
-                        .HasColumnName("method")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.HasKey("Code");
 
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("asset_type");
+                    b.ToTable("AssetType");
                 });
 #pragma warning restore 612, 618
         }
