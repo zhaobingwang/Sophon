@@ -14,4 +14,8 @@
     <ProjectReference Include="..\..\..\..\Framework\Sophon.Toolkit\src\Sophon.Toolkit\Sophon.Toolkit.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\MSSQL\" />
+  </ItemGroup>
+
 </Project>

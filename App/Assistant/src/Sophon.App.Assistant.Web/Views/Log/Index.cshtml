@@ -1,0 +1,106 @@
+﻿
+<div class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" name="date" id="start-date" lay-verify="date" placeholder="起始日期" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="date" id="end-date" lay-verify="date" placeholder="终止日期" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <select id="sel-log-level" lay-verify="required">
+                    <option value="">日志等级</option>
+                    @*<option value="Trace">Trace</option>*@
+                    <option value="Debug">Debug</option>
+                    <option value="Information">Information</option>
+                    <option value="Warning">Warning</option>
+                    <option value="Error">Error</option>
+                    <option value="Fatal">Critical</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="message" lay-verify="title" autocomplete="off" placeholder="日志信息" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button type="button" class="layui-btn" id="btn-search">查询</button>
+        </div>
+    </div>
+</div>
+<div>
+    <table id="tb-logs" lay-filter=""></table>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            renderTable();
+        });
+
+        var renderTable = function (params) {
+            var table = layui.table;
+
+            table.render({
+                elem: '#tb-logs',
+                page: true,
+                limit: 20,
+                limits: [10, 20, 50, 100],
+                where: params,
+                method: 'post',
+                url: '/api/log/listpage/',
+                cols: [[
+                    { field: 'id', width: 80, title: 'ID', sort: true },
+                    { field: 'level', width: 120, title: '日志等级', sort: true, templet: '#levelTpl' },
+                    { field: 'message', title: '信息' },
+                    { field: 'timestamp', width: 180, title: '记录时间', templet: '#timestampTpl' },
+                    { field: 'exception', width: 150, title: '异常信息' },
+                    { field: 'logEvent', width: 200, title: '属性', sort: true }
+                ]]
+            });
+        }
+
+
+        // 日期选择器
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#start-date'
+        });
+        laydate.render({
+            elem: '#end-date'
+        });
+
+        $('#btn-search').click(function () {
+            var startDate = $('#start-date').val();
+            var endDate = $('#end-date').val();
+            var level = $('#sel-log-level').val();
+            var message = $('#message').val();
+            var params = {
+                startDate: startDate,
+                endDate: endDate,
+                level: level,
+                message: message
+            }
+            renderTable(params);
+        });
+    </script>
+    <script type="text/html" id="timestampTpl">
+        {{# var date=dateFormat('yyyy-MM-dd HH:mm:ss',new Date(d.timestamp))}}
+        {{ date }}
+    </script>
+
+    <script type="text/html" id="levelTpl">
+        {{#  if(d.level == 'Information'){ }}
+        <span class="layui-badge layui-bg-green">{{d.level}}</span>
+        {{#  } else if(d.level == 'Error') { }}
+        <span class="layui-badge">{{d.level}}</span>
+        {{#  } else if(d.level == 'Warning') { }}
+        <span class="layui-badge layui-bg-orange">{{d.level}}</span>
+        {{#  } else if(d.level == 'Fatal') { }}
+        <span class="layui-badge layui-bg-black">{{d.level}}(Critical)</span>
+        {{#  } else { }}
+        <span class="layui-badge layui-bg-gray">{{d.level}}</span>
+        {{#  } }}
+    </script>
+}
+
