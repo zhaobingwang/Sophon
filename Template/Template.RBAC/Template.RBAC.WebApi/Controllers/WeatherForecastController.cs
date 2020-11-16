@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Template.RBAC.WebApi.Controllers
 {
+    /// <summary>
+    /// 天气信息
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -23,6 +26,10 @@ namespace Template.RBAC.WebApi.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// 获取天气信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
