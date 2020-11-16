@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Template.RBAC.WebApi.Config;
 using Template.RBAC.WebApi.Entities;
 
 namespace Template.RBAC.WebApi
@@ -31,6 +32,9 @@ namespace Template.RBAC.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppAuthenticationSettings>(appSettingsSection);
 
             services.AddDbContext<TemplateDbContext>(options =>
             {
