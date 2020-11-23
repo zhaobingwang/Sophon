@@ -7,7 +7,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Template.RBAC.WebApi.Config;
+using Template.RBAC.WebApi.Data;
 using Template.RBAC.WebApi.Entities;
+using Template.RBAC.WebApi.Enums;
 using Template.RBAC.WebApi.Extensions;
 
 namespace Template.RBAC.WebApi.Controllers
@@ -28,18 +30,33 @@ namespace Template.RBAC.WebApi.Controllers
         [HttpGet]
         public IActionResult Authentication(string userName, string password)
         {
+            var response = ResponseVOFactory.CreateInstanse;
             SysUser user;
-            // TODO: CHECK ACCOUNT
+
             using (_dbContext)
             {
-                //user = _dbContext.SysUser.FirstOrDefault(x => x.LoginName == userName.Trim());
-                user = new SysUser
+                user = _dbContext.SysUser.FirstOrDefault(x => x.LoginName == userName.Trim());
+                if (user == null || user.IsDeleted == IsDeleted.Yes)
                 {
-                    Id = Guid.Empty,
-                    DisplayName = "aaa",
-                    LoginName = "cccc",
-                    Type = Enums.UserType.Admin
-                };
+                    response.SetFailed("用户不存在");
+                    return Ok(response);
+                }
+                // FIX: http先明文传输
+                if (user.PasswordHash != password.Trim()?.ToMd5())
+                {
+                    response.SetFailed("用户密码错误");
+                    return Ok(response);
+                }
+                if (user.IsLocked == IsLocked.Locked)
+                {
+                    response.SetFailed("用户已被锁定");
+                    return Ok(response);
+                }
+                if (user.Status == Status.Forbidden)
+                {
+                    response.SetFailed("用户账号已被禁用");
+                    return Ok(response);
+                }
             }
 
             var claimsIdentity = new ClaimsIdentity(new Claim[] {
