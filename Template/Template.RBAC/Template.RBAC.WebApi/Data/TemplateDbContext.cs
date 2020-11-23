@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Template.RBAC.WebApi.Entities;
 
-namespace Template.RBAC.WebApi.Entities
+namespace Template.RBAC.WebApi.Data
 {
     public class TemplateDbContext : DbContext
     {
