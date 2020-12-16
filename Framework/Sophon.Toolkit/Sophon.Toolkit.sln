@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Toolkit", "src\Sophon.Toolkit\Sophon.Toolkit.csproj", "{9D279C66-0AC2-4D94-AB95-6ADCFDDFE560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit", "src\Sophon.Toolkit\Sophon.Toolkit.csproj", "{9D279C66-0AC2-4D94-AB95-6ADCFDDFE560}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Toolkit.Tests", "test\Sophon.Toolkit.Tests\Sophon.Toolkit.Tests.csproj", "{96DE7680-57E0-4A43-9114-1050FC0D187D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit.Tests", "test\Sophon.Toolkit.Tests\Sophon.Toolkit.Tests.csproj", "{96DE7680-57E0-4A43-9114-1050FC0D187D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Toolkit.Tests.ConsoleApp", "test\Sophon.Toolkit.Tests.ConsoleApp\Sophon.Toolkit.Tests.ConsoleApp.csproj", "{8FF891BD-B9AD-44DD-8EF7-BC39E39682E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{96DE7680-57E0-4A43-9114-1050FC0D187D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96DE7680-57E0-4A43-9114-1050FC0D187D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96DE7680-57E0-4A43-9114-1050FC0D187D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF891BD-B9AD-44DD-8EF7-BC39E39682E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF891BD-B9AD-44DD-8EF7-BC39E39682E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF891BD-B9AD-44DD-8EF7-BC39E39682E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF891BD-B9AD-44DD-8EF7-BC39E39682E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
