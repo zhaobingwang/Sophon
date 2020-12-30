@@ -29,7 +29,8 @@ namespace Sophon.Toolkit.IdentityCenter.WebMvc
         {
             services.AddDbContext<IdentityCenterDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("MSSQL"));
+                //options.UseSqlServer(Configuration.GetConnectionString("MSSQL"));
+                options.UseMySql(Configuration.GetConnectionString("MySql"), ServerVersion.AutoDetect(Configuration.GetConnectionString("MySql")));
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
