@@ -34,7 +34,7 @@ namespace Sophon.Toolkit.EntityFrameworkCore
         }
 
         public async Task<int> SaveChangesAsync()
-        {
+        { 
             return await _context.SaveChangesAsync();
         }
 
