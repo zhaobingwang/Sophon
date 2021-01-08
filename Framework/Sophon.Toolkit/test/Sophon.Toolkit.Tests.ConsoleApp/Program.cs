@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sophon.Toolkit.Sophon.Util;
+using System;
 
 namespace Sophon.Toolkit.Tests.ConsoleApp
 {
@@ -6,8 +7,10 @@ namespace Sophon.Toolkit.Tests.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var memoryMetrics = SystemUtil.GetMemoryMetrics();
-            Console.WriteLine($"{memoryMetrics.Total}\t{memoryMetrics.Used}\t{memoryMetrics.Free}");
+            var cnName = FakerUtil.GetOneChineseName();
+            Console.WriteLine(cnName);
+            var phoneNumber = FakerUtil.GetOnePhoneNumber();
+            Console.WriteLine(phoneNumber);
         }
     }
 }
