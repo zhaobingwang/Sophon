@@ -1,0 +1,40 @@
+name: Sophon.Toolkit.Faker Release
+
+on:
+  push:
+    branches: [ release/sophon.toolkit.faker ]
+
+jobs:
+  build:
+    name: Build Project Sophon.Toolkit.Faker
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Install dependencies
+      run: dotnet restore Framework/Sophon.Toolkit/Sophon.Toolkit.sln
+    - name: Build
+      run: dotnet build Framework/Sophon.Toolkit/Sophon.Toolkit.sln --configuration Release --no-restore
+    - name: Test
+      run: dotnet test Framework/Sophon.Toolkit/Sophon.Toolkit.sln --no-restore --verbosity normal
+
+  publish:
+    needs: [build]
+    name: Publish Sophon.Toolkit.Faker To NuGet
+    runs-on: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Publish
+      run: |
+        dotnet build Framework/Sophon.Toolkit/src/Sophon.Toolkit.Faker --configuration Release
+        dotnet nuget push Framework/Sophon.Toolkit/src/Sophon.Toolkit.Faker/bin/Release/Sophon.Toolkit.Faker.*.nupkg -k ${APIKEY} -s https://www.nuget.org/api/v2/package
+      env:
+        APIKEY: ${{ secrets.nuget }}
