@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Sophon.Toolkit.Faker\Sophon.Toolkit.Faker.csproj" />
     <ProjectReference Include="..\..\src\Sophon.Toolkit\Sophon.Toolkit.csproj" />
   </ItemGroup>
 

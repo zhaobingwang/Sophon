@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>ZhaoBingwang</Authors>
+    <Company></Company>
+    <Product>Sophon.Toolkit.Faker</Product>
+    <PackageProjectUrl>https://github.com/zhaobingwang/Sophon.Toolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zhaobingwang/Sophon.Toolkit</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath></OutputPath>
+    <DocumentationFile>.\bin\Sophon.Toolkit.Faker.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="32.0.2" />
+  </ItemGroup>
+
+</Project>

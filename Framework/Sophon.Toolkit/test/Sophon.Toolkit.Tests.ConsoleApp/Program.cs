@@ -1,4 +1,4 @@
-﻿using Sophon.Toolkit.Sophon.Util;
+﻿using Sophon.Toolkit.Faker;
 using System;
 
 namespace Sophon.Toolkit.Tests.ConsoleApp

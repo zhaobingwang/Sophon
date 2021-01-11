@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sophon.Toolkit.Sophon.Util
+namespace Sophon.Toolkit.Faker
 {
     /// <summary>
     /// 假数据生成工具
