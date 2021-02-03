@@ -10,8 +10,8 @@ namespace Sophon.Toolkit.Tests.ConsoleApp
         static void Main(string[] args)
         {
             RandomFaker randomFaker = new RandomFaker();
-            List<Student> list=new List<Student>();
-            var student = randomFaker.GetList(list, null);
+            List<Student> list = new List<Student>();
+            //var student = randomFaker.GetList(list, null);
             Console.WriteLine(randomFaker.GetBool());
         }
     }
