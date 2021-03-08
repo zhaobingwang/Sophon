@@ -28,10 +28,11 @@ namespace Template.RBAC.WebApi.Data
         /// <returns></returns>
         public static async Task SeedAsync(IServiceProvider provider)
         {
+            Faker faker = new Faker();
             var dbContext = provider.GetService<TemplateDbContext>();
             if (!dbContext.SysUser.Any())
             {
-                var users = Faker.GetSysUser();
+                var users = faker.GetSysUsers();
                 await dbContext.SysUser.AddRangeAsync(users);
                 await dbContext.SaveChangesAsync();
             }
