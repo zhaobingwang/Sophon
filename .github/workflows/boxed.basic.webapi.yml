@@ -34,7 +34,7 @@ jobs:
         dotnet-version: 5.0.101
     - name: Publish
       run: |
-        dotnet build Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi --configuration Release
-        dotnet nuget push Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi/bin/Release/Sophon.Boxed.BasicWebApi.*.nupkg -k ${APIKEY} -s https://www.nuget.org/api/v2/package
+        dotnet pack Boxed-Pack/Sophon.Boxed.BasicWebApi.Pack/Sophon.Boxed.BasicWebApi.Pack.csproj --configuration Release
+        dotnet nuget push Boxed-Pack/Sophon.Boxed.BasicWebApi.Pack/bin/Release/Sophon.Boxed.BasicWebApi.*.nupkg -k ${APIKEY} -s https://www.nuget.org/api/v2/package
       env:
         APIKEY: ${{ secrets.nuget }}
