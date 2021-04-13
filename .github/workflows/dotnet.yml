@@ -1,0 +1,41 @@
+  
+name: Sophon.Boxed.BasicConsoleApp Release
+
+on:
+  push:
+    branches: [ release/boxed.basic.consoleapp ]
+
+jobs:
+  build:
+    name: Build Project Sophon.Boxed.BasicConsoleApp
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Install dependencies
+      run: dotnet restore Boxed/Sophon.Boxed.BasicConsoleApp/Sophon.Boxed.BasicConsoleApp.sln
+    - name: Build
+      run: dotnet build Boxed/Sophon.Boxed.BasicConsoleApp/Sophon.Boxed.BasicConsoleApp.sln --configuration Release --no-restore
+    - name: Test
+      run: dotnet test Boxed/Sophon.Boxed.BasicConsoleApp/Sophon.Boxed.BasicConsoleApp.sln --no-restore --verbosity normal
+
+  publish:
+    needs: [build]
+    name: Publish Sophon.Boxed.BasicConsoleApp To NuGet
+    runs-on: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Publish
+      run: |
+        dotnet build Boxed/Sophon.Boxed.BasicConsoleApp/Sophon.Boxed.BasicConsoleApp --configuration Release
+        dotnet nuget push Boxed/Sophon.Boxed.BasicConsoleApp/Sophon.Boxed.BasicConsoleApp/bin/Release/Sophon.Boxed.BasicConsoleApp.*.nupkg -k ${APIKEY} -s https://www.nuget.org/api/v2/package
+      env:
+        APIKEY: ${{ secrets.nuget }}
