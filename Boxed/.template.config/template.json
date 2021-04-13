@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "ZhaoBingwang",
+  "classifications": ["BoxedTemplates", "Console"],
+  "identity": "Sophon.Boxed.BasicWebApi",
+  "name": "Boxed templates: Sophon.Boxed.BasicWebApi",
+  "shortName": "bca",
+  "sourceName": "Sophon.Boxed.BasicWebApi",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  }
+}
