@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Boxed.BasicConsoleApp", "Sophon.Boxed.BasicConsoleApp\Sophon.Boxed.BasicConsoleApp.csproj", "{4C08E0A6-C516-4430-9E6F-1A28DFE1F0B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Boxed.BasicConsoleApp", "Sophon.Boxed.BasicConsoleApp\Sophon.Boxed.BasicConsoleApp.csproj", "{717A01C8-7757-4D21-88E6-DA4F8053599F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4C08E0A6-C516-4430-9E6F-1A28DFE1F0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C08E0A6-C516-4430-9E6F-1A28DFE1F0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C08E0A6-C516-4430-9E6F-1A28DFE1F0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C08E0A6-C516-4430-9E6F-1A28DFE1F0B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717A01C8-7757-4D21-88E6-DA4F8053599F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717A01C8-7757-4D21-88E6-DA4F8053599F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717A01C8-7757-4D21-88E6-DA4F8053599F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717A01C8-7757-4D21-88E6-DA4F8053599F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

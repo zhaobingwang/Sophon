@@ -6,7 +6,7 @@ namespace Sophon.Boxed.BasicConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World From Sophon.Boxed.BasicConsoleApp");
+            Console.WriteLine("Hello World!");
         }
     }
 }
