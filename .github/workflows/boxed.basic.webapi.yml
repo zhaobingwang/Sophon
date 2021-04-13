@@ -1,0 +1,40 @@
+name: Sophon.Boxed.BasicWebApi Release
+
+on:
+  push:
+    branches: [ release/boxed.basic.webapi ]
+
+jobs:
+  build:
+    name: Build Project Sophon.Boxed.BasicWebApi
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Install dependencies
+      run: dotnet restore Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi.sln
+    - name: Build
+      run: dotnet build Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi.sln --configuration Release --no-restore
+    - name: Test
+      run: dotnet test Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi.sln --no-restore --verbosity normal
+
+  publish:
+    needs: [build]
+    name: Publish Sophon.Boxed.BasicWebApi To NuGet
+    runs-on: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Publish
+      run: |
+        dotnet build Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi --configuration Release
+        dotnet nuget push Boxed/Sophon.Boxed.BasicWebApi/Sophon.Boxed.BasicWebApi/bin/Release/Sophon.Boxed.BasicWebApi.*.nupkg -k ${APIKEY} -s https://www.nuget.org/api/v2/package
+      env:
+        APIKEY: ${{ secrets.nuget }}
