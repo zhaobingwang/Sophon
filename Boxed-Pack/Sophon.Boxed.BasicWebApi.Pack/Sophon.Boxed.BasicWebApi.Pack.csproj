@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <PackageVersion>1.0</PackageVersion>
+    <PackageId>Sophon.Boxed.BasicWebApi</PackageId>
+    <Title>Sophon.Boxed.BasicWebApi Templates</Title>
+    <Authors>ZhaoBingwang</Authors>
+    <Description>Sophon.Boxed.BasicWebApi.</Description>
+    <PackageTags>dotnet-new;templates;webapi;boxed;sophon;</PackageTags>
+
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>

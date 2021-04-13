@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Boxed.BasicWebApi", "Sophon.Boxed.BasicWebApi\Sophon.Boxed.BasicWebApi.csproj", "{0F584C20-843E-4471-8011-D8E6A233B71B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Boxed.BasicWebApi.Infrastructure", "Sophon.Boxed.BasicWebApi.Infrastructure\Sophon.Boxed.BasicWebApi.Infrastructure.csproj", "{B89C076C-DBFE-41C0-B175-EB1F7BAF62A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F584C20-843E-4471-8011-D8E6A233B71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F584C20-843E-4471-8011-D8E6A233B71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F584C20-843E-4471-8011-D8E6A233B71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F584C20-843E-4471-8011-D8E6A233B71B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B89C076C-DBFE-41C0-B175-EB1F7BAF62A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B89C076C-DBFE-41C0-B175-EB1F7BAF62A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B89C076C-DBFE-41C0-B175-EB1F7BAF62A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B89C076C-DBFE-41C0-B175-EB1F7BAF62A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9008076-79E5-4DC0-9313-147AB36531E1}
+	EndGlobalSection
+EndGlobal
