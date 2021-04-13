@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "ZhaoBingwang",
-  "classifications": ["BoxedTemplates", "Console"],
+  "classifications": ["BoxedTemplates", "WebApi"],
   "identity": "Sophon.Boxed.BasicWebApi",
   "name": "Boxed templates: Sophon.Boxed.BasicWebApi",
   "shortName": "bwa",
