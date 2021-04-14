@@ -4,6 +4,7 @@ namespace Sophon.Boxed.BasicWebApi
 {
     public class WeatherForecast
     {
+        public string From { get; set; }
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
