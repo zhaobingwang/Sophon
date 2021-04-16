@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sophon.Boxed.BasicWebApi
+namespace Sophon.Boxed.BasicWebApp.WebApi
 {
     public class Startup
     {
@@ -27,11 +26,11 @@ namespace Sophon.Boxed.BasicWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddConfig(Configuration);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sophon.Boxed.BasicWebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sophon.Boxed.BasicWebApp.WebApi", Version = "v1" });
             });
         }
 
@@ -42,15 +41,13 @@ namespace Sophon.Boxed.BasicWebApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sophon.Boxed.BasicWebApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sophon.Boxed.BasicWebApp.WebApi v1"));
             }
-
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
