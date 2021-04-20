@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Framework\Sophon.Toolkit\src\Sophon.Toolkit\Sophon.Toolkit.csproj" />
     <ProjectReference Include="..\Sophon.Boxed.BasicWebApp.Application\Sophon.Boxed.BasicWebApp.Application.csproj" />
   </ItemGroup>
 

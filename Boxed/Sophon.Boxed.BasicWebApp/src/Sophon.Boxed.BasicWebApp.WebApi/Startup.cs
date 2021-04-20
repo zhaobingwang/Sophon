@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,10 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Sophon.Boxed.BasicWebApp.WebApi
@@ -26,6 +29,40 @@ namespace Sophon.Boxed.BasicWebApp.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddConfig(Configuration);
+
+            var jwtSetting = new JwtSettings();
+            Configuration.Bind("JwtSetting", jwtSetting);
+
+            services
+              .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options =>
+              {
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidIssuer = jwtSetting.Issuer,
+                      ValidAudience = jwtSetting.Audience,
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.SecurityKey)),
+                      // 默认允许 300s  的时间偏移量，设置为0
+                      ClockSkew = TimeSpan.Zero
+                  };
+                  options.Events = new JwtBearerEvents()
+                  {
+                      OnMessageReceived = context =>
+                      {
+                          context.Token = context.Request.Query["access_token"];
+                          return Task.CompletedTask;
+                      },
+                      OnAuthenticationFailed = context =>
+                      {
+                          if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                          {
+                              context.Response.Headers.Add("Token-Expired", "true");
+                          }
+                          return Task.CompletedTask;
+                      }
+                  };
+              });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,6 +85,7 @@ namespace Sophon.Boxed.BasicWebApp.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
