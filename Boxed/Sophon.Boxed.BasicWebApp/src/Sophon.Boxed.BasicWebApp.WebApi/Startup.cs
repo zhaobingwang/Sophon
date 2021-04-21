@@ -64,7 +64,11 @@ namespace Sophon.Boxed.BasicWebApp.WebApi
                   };
               });
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                // snake case nameing policy
+                //options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sophon.Boxed.BasicWebApp.WebApi", Version = "v1" });

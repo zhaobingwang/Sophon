@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Sophon.Boxed.BasicWebApp.Application;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,28 +15,27 @@ namespace Sophon.Boxed.BasicWebApp.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class IdentityController : ControllerBase
     {
         private readonly JwtSettings _jwtSettings;
-        public AccountController(IOptions<JwtSettings> jwtSettings)
+
+        public IdentityController(IOptions<JwtSettings> jwtSettings)
         {
             _jwtSettings = jwtSettings.Value;
         }
 
-        [HttpPost("login")]
-        public async Task<SysUser> LoginAsync(string name, string password)
+        [HttpPost("token")]
+        public async Task<IActionResult> Token(string name, string password)
         {
             await Task.CompletedTask;
-            if (User.Name == name && User.PasswordHash == password.Sha256())
-            {
-                return User;
-            }
-            return null;
-        }
 
-        [HttpPost("token")]
-        public string GetToken(SysUser user)
-        {
+            // TODO: use real user.
+            var user = Faker.GetUser();
+            if (user.Name != name || user.PasswordHash != password.Sha256())
+            {
+                return NoContent();
+            }
+
             var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
@@ -53,15 +53,8 @@ namespace Sophon.Boxed.BasicWebApp.WebApi.Controllers
             );
 
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-            return jwtToken;
+            //return Ok(jwtToken);
+            return Ok(new GetAccessTokenResponse { AccessToken = jwtToken, ExpiresIn = _jwtSettings.ExpireSeconds });
         }
-
-        private readonly static SysUser User = new SysUser
-        {
-            Id = Guid.Parse("70828ACC-A9C6-417F-BB66-BB2E61198C20"),
-            Name = "dev",
-            PasswordHash = "123456".Sha256()
-        };
-
     }
 }
