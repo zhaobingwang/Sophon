@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Framework\Sophon.Toolkit\src\Sophon.Toolkit\Sophon.Toolkit.csproj" />
     <ProjectReference Include="..\Sophon.Boxed.BasicWebApp.Application\Sophon.Boxed.BasicWebApp.Application.csproj" />
+    <ProjectReference Include="..\Sophon.Boxed.BasicWebApp.EntityFrameworkCore\Sophon.Boxed.BasicWebApp.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

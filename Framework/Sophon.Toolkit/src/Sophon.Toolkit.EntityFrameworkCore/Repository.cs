@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,9 +37,14 @@ namespace Sophon.Toolkit.EntityFrameworkCore
             return _dbSet.FindAsync(keyValues);
         }
 
-        public virtual Task InsertAsync(params TEntity[] entities)
+        public virtual Task InserManytAsync(params TEntity[] entities)
         {
             return _dbSet.AddRangeAsync(entities);
+        }
+
+        public virtual ValueTask<EntityEntry<TEntity>> InsertAsync(TEntity entity)
+        {
+            return _dbSet.AddAsync(entity);
         }
     }
 }

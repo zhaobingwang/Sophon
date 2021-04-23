@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit.Tests.WebApi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit.Faker", "src\Sophon.Toolkit.Faker\Sophon.Toolkit.Faker.csproj", "{89F29426-EBB5-4761-AAC5-ED9F03CC103F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Toolkit.Tests.WebMvc", "test\Sophon.Toolkit.Tests.WebMvc\Sophon.Toolkit.Tests.WebMvc.csproj", "{ECC8C1CA-1110-45DA-BAA3-96A86ED7B2EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sophon.Toolkit.Tests.WebMvc", "test\Sophon.Toolkit.Tests.WebMvc\Sophon.Toolkit.Tests.WebMvc.csproj", "{ECC8C1CA-1110-45DA-BAA3-96A86ED7B2EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sophon.Toolkit.EntityFrameworkCore.Tests", "test\Sophon.Toolkit.EntityFrameworkCore.Tests\Sophon.Toolkit.EntityFrameworkCore.Tests.csproj", "{2D145DB8-1C2E-4FD8-9AFA-2EC8A223B516}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{ECC8C1CA-1110-45DA-BAA3-96A86ED7B2EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECC8C1CA-1110-45DA-BAA3-96A86ED7B2EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC8C1CA-1110-45DA-BAA3-96A86ED7B2EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D145DB8-1C2E-4FD8-9AFA-2EC8A223B516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D145DB8-1C2E-4FD8-9AFA-2EC8A223B516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D145DB8-1C2E-4FD8-9AFA-2EC8A223B516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D145DB8-1C2E-4FD8-9AFA-2EC8A223B516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{058389BE-C468-42A2-917A-9DF2828C2507} = {DFB968FC-2DA4-4075-A502-A7950DA6FD23}
 		{89F29426-EBB5-4761-AAC5-ED9F03CC103F} = {9680365E-4203-4287-962F-05AD81A8354B}
 		{ECC8C1CA-1110-45DA-BAA3-96A86ED7B2EC} = {DFB968FC-2DA4-4075-A502-A7950DA6FD23}
+		{2D145DB8-1C2E-4FD8-9AFA-2EC8A223B516} = {DFB968FC-2DA4-4075-A502-A7950DA6FD23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA99B908-4F19-4BCB-A523-E7D36A2EFA84}
