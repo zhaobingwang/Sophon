@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +40,46 @@ namespace Sophon.Toolkit.EntityFrameworkCore
         public virtual ValueTask<TEntity> FindAsync(params object[] keyValues)
         {
             return _dbSet.FindAsync(keyValues);
+        }
+
+        /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="predicate">过滤条件</param>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="include">包含的导航属性</param>
+        /// <param name="pageIndex">页索引</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="noTracking">不跟踪查询</param>
+        /// <param name="ignoreQueryFilters"></param>
+        /// <returns></returns>
+        public virtual Task<IPageList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+            int pageIndex = 0,
+            int pageSize = 10,
+            bool noTracking = true,
+            CancellationToken cancellationToken = default(CancellationToken),
+            bool ignoreQueryFilters = false)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (noTracking)
+                query = query.AsNoTracking();
+
+            if (include != null)
+                query = include(query);
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            if (ignoreQueryFilters)
+                query = query.IgnoreQueryFilters();
+
+            if (orderBy != null)
+                return orderBy(query).ToPagedListAsync(pageIndex, pageSize, cancellationToken);
+            else
+                return query.ToPagedListAsync(pageIndex, pageSize, cancellationToken);
         }
         #endregion
 
