@@ -87,6 +87,14 @@ namespace Sophon.Boxed.BasicWebApp.WebApi
 
             app.UseHttpsRedirection();
 
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                //builder.WithOrigins("http://localhost:5000");// 指定可跨域来源地址
+                builder.AllowAnyOrigin();
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
