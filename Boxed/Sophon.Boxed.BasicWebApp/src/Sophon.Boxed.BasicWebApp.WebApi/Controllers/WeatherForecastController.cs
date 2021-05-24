@@ -26,6 +26,8 @@ namespace Sophon.Boxed.BasicWebApp.WebApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation("visit/WeatherForecast/Get");
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
