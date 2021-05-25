@@ -31,6 +31,7 @@ namespace Sophon.Boxed.BasicWebApp.WebApi
             try
             {
                 Log.Information("Starting web host");
+                Log.Fatal("Fatal Info");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
