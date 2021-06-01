@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sophon.Toolkit.Extensions.System
+namespace System
 {
     /// <summary>
     /// 对象扩展方法
@@ -32,6 +32,17 @@ namespace Sophon.Toolkit.Extensions.System
         public static bool IsIn<T>(this T obj, params T[] list)
         {
             return list.Contains(obj);
+        }
+
+        /// <summary>
+        /// 获取可为空对象的值（值为null时不抛异常）
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="value">源数据</param>
+        /// <returns></returns>
+        public static T SafeValue<T>(this T? value) where T : struct
+        {
+            return value ?? default(T);
         }
     }
 }
